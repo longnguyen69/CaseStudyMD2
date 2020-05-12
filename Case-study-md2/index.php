@@ -1,8 +1,11 @@
 <?php
 session_start();
+require "model/Room.php";
+require "model/Student.php";
 require "model/connectDB/ConnectDB.php";
 require "model/workDB/ProcessDB.php";
 require "controller/ControllerData.php";
+
 
 ?>
 <!doctype html>
@@ -15,22 +18,29 @@ require "controller/ControllerData.php";
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <title>Document</title>
+
 </head>
 <body>
 
 <div class="hed">
     <ul class="nav justify-content-end">
         <li class="nav-item">
-            <a class="nav-link active" href="#">Trang chủ</a>
+            <a class="nav-link active" href="./index.php">Trang chủ</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Lớp</a>
+            <a class="nav-link" href="index.php?page=lop">Lớp</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Khóa học</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Sinh viên</a>
+            <a class="nav-link" href="index.php?page=Student">Sinh viên</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Môn học</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Khoa</a>
         </li>
         <li class="nav-item">
             <p class="nav-link" href="#"></p>
@@ -39,12 +49,11 @@ require "controller/ControllerData.php";
             <p class="nav-link" href="#"></p>
         </li>
         <?php if (isset($_SESSION['user'])): ?>
-
             <li class="nav-item">
                 <a class="nav-link" href="#"><?php echo $_SESSION['user'] ?></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Logout</a>
+                <a class="nav-link" href="./index.php?page=logout">Logout</a>
             </li>
         <?php else: ?>
             <li class="nav-item">
@@ -55,10 +64,56 @@ require "controller/ControllerData.php";
 </div>
 <?php
 $controller = new \control\ControllerData();
-$page = isset($_REQUEST['$page']) ? $_REQUEST['$page'] : null;
-switch ($page){
+
+$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : null;
+switch ($page) {
     case 'login':
         $controller->login();
+        break;
+    case 'logout':
+        $controller->logout();
+        break;
+    case 'lop':
+        $controller->viewClass();
+        break;
+    case 'studentClass':
+        $controller->getStudentClass();
+        break;
+    case 'edit':
+        if (isset($_SESSION['user'])) {
+            $controller->editClass();
+            break;
+        } else {
+            $controller->login();
+            break;
+        }
+    case 'create':
+        if (isset($_SESSION['user'])) {
+            $controller->createClass();
+            break;
+        } else {
+            $controller->login();
+            break;
+        }
+    case 'delete':
+        if (isset($_SESSION['user'])) {
+            $controller->deleteClass();
+            break;
+        } else {
+            $controller->login();
+            break;
+        }
+    case 'Student':
+        $controller->viewStudent();
+        break;
+    case 'createStudent':
+        $controller->addStudent();
+        break;
+    case 'editSV':
+        $controller->editStudent();
+        break;
+    case 'deleteSV':
+        $controller->deleteStudent();
         break;
 }
 ?>
