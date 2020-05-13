@@ -186,7 +186,7 @@ class ControllerData
         if (isset($_REQUEST['keyword'])){
             $keyword = $_REQUEST['keyword'];
             $students = $this->process->findStudent($keyword);
-            include "view/student/searchStudent.php";
+            include "view/student/viewStudent.php";
         } else {
             $students = $this->process->getStudent();
             include "view/student/viewStudent.php";

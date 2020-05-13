@@ -3,7 +3,7 @@
         <h3>Danh Sách Học Viên</h3>
     </div>
     <br>
-    <div class="col-md-2"><butiênton type="submit" class="btn btn-outline-success" onclick="window.location.href='./index.php?page=createStudent'">Thêm Mới</butiênton></div>
+    <div class="col-md-2"><button type="submit" class="btn btn-outline-success" onclick="window.location.href='./index.php?page=createStudent'">Thêm Mới</button></div>
     <div class="col-12 col-md-6">
         <form class="form-inline my-2 my-lg-0" method="get">
             <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="Search"
