@@ -1,9 +1,9 @@
 <div class="card">
     <div class="card-header">
-        <h3>Danh Sách Học Viên</h3>
+        Danh Học Sinh Toàn Trường
     </div>
     <br>
-    <div class="col-md-2"><butiênton type="submit" class="btn btn-outline-success" onclick="window.location.href='./index.php?page=createStudent'">Thêm Mới</butiênton></div>
+    <div class="col-md-2"><button type="submit" class="btn btn-outline-success" onclick="window.location.href='./index.php?page=createStudent'">Thêm Mới</button></div>
     <div class="col-12 col-md-6">
         <form class="form-inline my-2 my-lg-0" method="get">
             <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="Search"
@@ -38,7 +38,7 @@
                     <td><?php echo $values['TenLop'] ?></td>
                     <td>
                         <a class="btn btn-warning btn-sm" href="index.php?page=editSV&MaSV=<?php echo $values['MaSV']?>">Update Info</a>
-                        <a class="btn btn-warning btn-sm" onclick="return confirm('Are you sure?')" href="index.php?page=deleteSV&MaSV=<?php echo $values['MaLop']?>">Delete</a>
+                        <a class="btn btn-warning btn-sm" onclick="return confirm('Are you sure delete?')" href="index.php?page=deleteSV&MaSV=<?php echo $values['MaLop']?>">Delete</a>
                         <a class="btn btn-warning btn-sm" href="index.php?page=detail&MaSV=<?php echo $values['MaSV']?>">Detail</a>
                         <a class="btn btn-warning btn-sm" href="index.php?page=detail&UpScore=<?php echo $values['MaSV']?>">Update Score</a>
                     </td>

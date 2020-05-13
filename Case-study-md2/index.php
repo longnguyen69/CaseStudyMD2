@@ -40,20 +40,24 @@ require "controller/ControllerData.php";
             <a class="nav-link" href="#">Môn học</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Khoa</a>
-        </li>
-        <li class="nav-item">
-            <p class="nav-link" href="#"></p>
-        </li>
-        <li class="nav-item">
             <p class="nav-link" href="#"></p>
         </li>
         <?php if (isset($_SESSION['user'])): ?>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <?php echo strtoupper($_SESSION['user']) ?>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Setting</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="./index.php?page=logout">Logout</a>
+                    </div>
+                </li>
+            </ul>
             <li class="nav-item">
-                <a class="nav-link" href="#"><?php echo $_SESSION['user'] ?></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="./index.php?page=logout">Logout</a>
+                <p class="nav-link" href="#"></p>
             </li>
         <?php else: ?>
             <li class="nav-item">

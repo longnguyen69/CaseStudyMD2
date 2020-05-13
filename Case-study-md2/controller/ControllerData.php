@@ -180,4 +180,16 @@ class ControllerData
             header('location: index.php?page=Student');
         }
     }
+
+    public function findStudent()
+    {
+        if (isset($_REQUEST['keyword'])){
+            $keyword = $_REQUEST['keyword'];
+            $students = $this->process->findStudent($keyword);
+            include "view/student/searchStudent.php";
+        } else {
+            $students = $this->process->getStudent();
+            include "view/student/viewStudent.php";
+        }
+    }
 }

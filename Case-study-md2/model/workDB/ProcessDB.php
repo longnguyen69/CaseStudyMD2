@@ -169,4 +169,11 @@ class ProcessDB
         $stmt->bindParam(1,$maSV);
         $stmt->execute();
     }
+
+    public function findStudent($keyword)
+    {
+        $sql = "SELECT * FROM `Sinhvien` WHERE TenSV LIKE '%$keyword'";
+        $stmt = $this->conn->query($sql);
+        return$stmt->fetchAll();
+    }
 }
