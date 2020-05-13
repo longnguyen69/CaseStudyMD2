@@ -49,18 +49,16 @@ class ControllerData
     public function createClass()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $khoas = $this->process->getKhoa();
             $kH = $this->process->getKhoaHoc();
             $heDaoTao = $this->process->getHeDT();
             include "view/class/addClass.php";
         } else {
             $maLop = $_REQUEST['maLop'];
             $tenLop = $_REQUEST['tenLop'];
-            $khoa = $_REQUEST['khoa'];
             $khoaHoc = $_REQUEST['khoaHoc'];
             $heDT = $_REQUEST['heDT'];
 
-            $room = new Room($maLop, $tenLop, $khoa, $khoaHoc, $heDT);
+            $room = new Room($maLop, $tenLop, $khoaHoc, $heDT);
             $this->process->addClass($room);
             $message = "Add Completed";
             include 'view/class/addClass.php';
@@ -73,14 +71,12 @@ class ControllerData
             $maLop = $_REQUEST['MaLop'];
             $_SESSION['maLop'] = $maLop;
             $room = $this->process->getMaClass($maLop);
-            $khoa = $this->process->getKhoa();
             $khoaHocs = $this->process->getKhoaHoc();
             $heDTs = $this->process->getHeDT();
             include "view/class/editClass.php";
         } else {
             $maLop = $_REQUEST['MaLop'];
             $room = $this->process->getMaClass($maLop);
-            $khoa = $this->process->getKhoa();
             $khoaHocs = $this->process->getKhoaHoc();
             $heDTs = $this->process->getHeDT();
 

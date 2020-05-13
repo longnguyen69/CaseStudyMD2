@@ -33,7 +33,7 @@ class ProcessDB
     // xem cac lop trong truong hoc
     public function getClass()
     {
-        $sql = "select * from Lop join Khoa on Lop.Khoa = Khoa.MaKhoa";
+        $sql = "select * from Lop";
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll();
     }
@@ -41,13 +41,12 @@ class ProcessDB
     // them lop hoc
     public function addClass($room)
     {
-        $sql = "INSERT INTO `Lop`(`MaLop`, `TenLop`, `Khoa`, `KhoaHoc`, `HeDT`) VALUES (?,?,?,?,?)";
+        $sql = "INSERT INTO `Lop`(`MaLop`, `TenLop`, `KhoaHoc`, `HeDT`) VALUES (?,?,?,?)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $room->maLop);
         $stmt->bindParam(2, $room->tenLop);
-        $stmt->bindParam(3, $room->khoa);
-        $stmt->bindParam(4, $room->khoaHoc);
-        $stmt->bindParam(5, $room->heDT);
+        $stmt->bindParam(3, $room->khoaHoc);
+        $stmt->bindParam(4, $room->heDT);
         $stmt->execute();
     }
 
@@ -62,14 +61,13 @@ class ProcessDB
     //chinh sua lop(update so lieu)
     public function updateClass($room)
     {
-        $sql = "UPDATE `Lop` SET `MaLop`=?,`TenLop`=?,`Khoa`=?,`KhoaHoc`=?,`HeDT`=? WHERE `MaLop`=? ";
+        $sql = "UPDATE `Lop` SET `MaLop`=?,`TenLop`=?,`KhoaHoc`=?,`HeDT`=? WHERE `MaLop`=? ";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $room->maLop);
         $stmt->bindParam(2, $room->tenLop);
-        $stmt->bindParam(3, $room->khoa);
-        $stmt->bindParam(4, $room->khoaHoc);
-        $stmt->bindParam(5, $room->heDT);
-        $stmt->bindParam(6, $room->maLop);
+        $stmt->bindParam(3, $room->khoaHoc);
+        $stmt->bindParam(4, $room->heDT);
+        $stmt->bindParam(5, $room->maLop);
         $stmt->execute();
     }
 
@@ -80,14 +78,6 @@ class ProcessDB
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $maLop);
         return $stmt->execute();
-    }
-
-    // hien thi khoa
-    public function getKhoa()
-    {
-        $sql = "SELECT * FROM Khoa";
-        $stmt = $this->conn->query($sql);
-        return $stmt->fetchAll();
     }
 
     // hien thi khoa hoc
@@ -112,7 +102,7 @@ class ProcessDB
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['malop' => $maLop]);
         $arr = $stmt->fetch();
-        return new Room($arr['MaLop'], $arr['TenLop'], $arr['Khoa'], $arr['KhoaHoc'], $arr['HeDT']);
+        return new Room($arr['MaLop'], $arr['TenLop'], $arr['KhoaHoc'], $arr['HeDT']);
     }
 
     // hien thi hoc sinh trong lop

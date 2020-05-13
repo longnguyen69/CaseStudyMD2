@@ -17,7 +17,6 @@
                 <tr>
                     <th scope="col">STT</th>
                     <th scope="col">Tên Lớp</th>
-                    <th scope="col">Khoa</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
@@ -28,7 +27,6 @@
                     <tr>
                         <th scope="row"><?php echo ++$key ?></th>
                         <td><?php echo $values['TenLop'] ?></td>
-                        <td><?php echo $values['TenKhoa'] ?></td>
                         <td><a href="index.php?page=edit&MaLop=<?php echo $values['MaLop'] ?>"
                                class="btn btn-warning btn-sm">Update</a></td>
                         <td><a class="btn btn-warning btn-sm"

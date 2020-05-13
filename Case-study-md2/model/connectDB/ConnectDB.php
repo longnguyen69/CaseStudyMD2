@@ -13,7 +13,7 @@ class ConnectDB
     public function __construct()
     {
         $this->userName = 'root';
-        $this->password = 'Adda@12354';
+        $this->password = 'Since1992!';
     }
 
     public function connect()

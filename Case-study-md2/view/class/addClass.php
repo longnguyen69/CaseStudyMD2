@@ -20,14 +20,6 @@
                     <input type="text" class="form-control" name="tenLop" placeholder="Nhập tên lớp" required>
                 </div>
                 <div class="form-group">
-                    <label>Khoa</label>
-                    <select class="custom-select" name="khoa">
-                        <?php foreach ($khoas as $key): ?>
-                            <option value="<?php echo $key['MaKhoa']?>"><?php echo $key['TenKhoa'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="form-group">
                     <label>Khoa Hoc</label>
                     <select class="custom-select" name="khoaHoc">
                         <?php foreach ($kH as $key): ?>
