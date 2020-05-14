@@ -48,6 +48,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary" value="update">Update</button>
+                <a href="./index.php?page=Student" class="btn btn-dark">Cancel</a>
             </form>
         </div>
     </div>

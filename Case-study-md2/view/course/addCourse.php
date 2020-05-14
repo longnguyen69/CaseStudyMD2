@@ -25,6 +25,7 @@
                     <textarea class="form-control" rows="15" placeholder="Viết mô tả" name="text"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary" name="create">Thêm mới</button>
+                <a href="./index.php?page=course" class="btn btn-dark">Cancel</a>
             </form>
         </div>
     </div>

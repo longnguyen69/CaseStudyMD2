@@ -21,6 +21,7 @@
                     <textarea class="form-control" rows="15" name="text"><?php echo $course['MoTa']?></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary" name="create">Thêm mới</button>
+                <a href="./index.php?page=Student" class="btn btn-dark">Cancel</a>
             </form>
         </div>
     </div>

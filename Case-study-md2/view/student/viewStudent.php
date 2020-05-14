@@ -1,4 +1,3 @@
-
 <div class="card">
     <div class="card-header">
         <h3>Thông Tin Học Viên</h3>
@@ -22,23 +21,29 @@
             </tr>
             <tr>
                 <th scope="col">Tên Học Viên</th>
-                <td><?php echo $arr['TenSV']?></td>
+                <td><?php echo $arr['TenSV'] ?></td>
             </tr>
             <tr>
                 <th scope="col">Giới Tính</th>
-                <td><?php echo $arr['GioiTinh']?></td>
+                <?php if ($arr['GioiTinh'] == 1): ?>
+                    <td><?php echo 'Nam'?></td>
+                <?php else:?>
+                    <td><?php echo "Nữ"?></td>
+                <?php endif; ?>
+
+
             </tr>
             <tr>
                 <th scope="col">Ngày Sinh</th>
-                <td><?php echo $arr['NgaySinh']?></td>
+                <td><?php echo $arr['NgaySinh'] ?></td>
             </tr>
             <tr>
                 <th scope="col">Quê Quán</th>
-                <td><?php echo $arr['QueQuan']?></td>
+                <td><?php echo $arr['QueQuan'] ?></td>
             </tr>
             <tr>
                 <th scope="col">Lớp Học</th>
-                <td><?php echo $arr['TenLop']?></td>
+                <td><?php echo $arr['TenLop'] ?></td>
             </tr>
             <tr>
                 <th scope="col">Khóa Học</th>
@@ -56,27 +61,20 @@
                 <th scope="col">Điểm Module 3</th>
                 <td><?php echo $arr['Module3']; ?></td>
             </tr>
+            <tr>
+                <th scope="col">Điểm Trung Bình</th>
+                <td>
+                    <?php
+
+                    ?>
+                </td>
+            </tr>
             </thead>
+
             <tbody>
-<!--            --><?php //foreach ($students as $key => $values): ?>
-<!--                <tr>-->
-<!--                    <th scope="row">--><?php //echo ++$key ?><!--</th>-->
-<!--                    <td>--><?php //echo $values['MaSV'] ?><!--</td>-->
-<!--                    <td>--><?php //echo $values['TenSV'] ?><!--</td>-->
-<!--                    <td>--><?php //echo $values['GioiTinh'] ?><!--</td>-->
-<!--                    <td>--><?php //echo $values['NgaySinh'] ?><!--</td>-->
-<!--                    <td>--><?php //echo $values['QueQuan'] ?><!--</td>-->
-<!--                    <td>--><?php //echo $values['TenLop'] ?><!--</td>-->
-<!--                    <td>-->
-<!--                        <a class="btn btn-warning btn-sm" href="index.php?page=editSV&MaSV=--><?php //echo $values['MaSV']?><!--">Update Info</a>-->
-<!--                        <a class="btn btn-warning btn-sm" onclick="return confirm('Are you sure?')" href="index.php?page=deleteSV&MaSV=--><?php //echo $values['MaLop']?><!--">Delete</a>-->
-<!--                        <a class="btn btn-warning btn-sm" href="index.php?page=detail&MaSV=--><?php //echo $values['MaSV']?><!--">Detail</a>-->
-<!--                        <a class="btn btn-warning btn-sm" href="index.php?page=detail&UpScore=--><?php //echo $values['MaSV']?><!--">Update Score</a>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--            --><?php //endforeach; ?>
             </tbody>
         </table>
+        <a href="./index.php?page=Student" class="btn btn-dark">Cancel</a>
     </div>
 </div>
 

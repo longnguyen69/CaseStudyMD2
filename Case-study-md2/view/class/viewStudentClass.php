@@ -31,10 +31,15 @@
                     <td><?php echo $values['MaSV'] ?></td>
                     <td><?php echo $values['TenSV'] ?></td>
                     <td><?php echo $values['TenLop'] ?></td>
-                    <td><?php echo $values['GioiTinh'] ?></td>
+                    <td><?php echo $values['TenSV'] ?></td>
+                    <?php if ($values['GioiTinh'] == 1): ?>
+                        <td><?php echo 'Nam'?></td>
+                    <?php else:?>
+                        <td><?php echo 'Nữ'?></td>
+                    <?php endif;?>
                     <td><?php echo $values['TenKH'] ?></td>
                     <td><?php echo $values['TenHe'] ?></td>
-                    <td><a href="index.php?page=edit&page=editSV&MaSV=<?php echo $values['MaSV']?>" class="btn btn-warning btn-sm">Update</a></td>
+                    <td><a class="btn btn-warning btn-sm" href="index.php?page=edit&page=editSV&MaSV=<?php echo $values['MaSV']?>" >Update</a></td>
                     <td><a class="btn btn-warning btn-sm" href="index.php?page=delete&MaLop=<?php echo $values['MaLop']?>">Delete</a></td>
                     <td><a class="btn btn-warning btn-sm" href="index.php?page=detail&MaSV=<?php echo $values['MaSV']?>">Detail</a></td>
                     <td><a class="btn btn-warning btn-sm" href="index.php?page=AddScore&MaSV=<?php echo $values['MaSV']?>">Add Score</a></td>

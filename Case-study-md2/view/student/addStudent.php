@@ -44,6 +44,7 @@
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary" name="create">Thêm mới</button>
+                <a href="./index.php?page=Student" class="btn btn-dark">Cancel</a>
             </form>
         </div>
     </div>

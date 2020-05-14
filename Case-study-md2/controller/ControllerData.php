@@ -5,6 +5,7 @@ namespace control;
 use dbStudent\ConnectDB;
 use model\Course;
 use model\Room;
+use model\Score;
 use model\Student;
 use wordDB\ProcessDB;
 
@@ -80,10 +81,8 @@ class ControllerData
             $room = $this->process->getMaClass($maLop);
             $khoaHocs = $this->process->getKhoaHoc();
             $heDTs = $this->process->getHeDT();
-
             $maLop1 = $_SESSION['maLop'];
             $tenLop1 = $_REQUEST['tenLop'];
-
             $khoaHoc1 = $_REQUEST['khoaHoc'];
             $heDT1 = $_REQUEST['heDT'];
 
@@ -101,11 +100,9 @@ class ControllerData
             $maLop = $_REQUEST['MaLop'];
             $_SESSION['maLop'] = $maLop;
             $room = $this->process->getIdLop($maLop);
-//            var_dump($maLop);
             include "view/class/deleteClass.php";
         } else {
             $maLop1 = $_POST['maLop'];
-//           var_dump($maLop1);
             $this->process->deleteClass($maLop1);
             header('location: index.php');
         }
@@ -139,13 +136,9 @@ class ControllerData
             $ngaySinh = $_POST['ngaySinh'];
             $queQuan = $_POST['queQuan'];
             $maLop = $_POST['lop'];
-
             $student = new Student($maSV, $tenSV, $gioiTinh, $ngaySinh, $queQuan, $maLop);
             $this->process->addStudent($student);
-//            var_dump($student->maSV);
-//            die();
             $this->process->addScoreStudent($student->maSV);
-
             $message = 'Add Complete';
             include "view/student/addStudent.php";
         }
@@ -159,7 +152,6 @@ class ControllerData
             $students = $this->process->getIDStudent($maSV);
             $room = $this->process->getIdLop($students['Lop']);
             $class = $this->process->getClass();
-
             include 'view/student/editStudent.php';
         } else {
             $maSV = $_SESSION['maSV'];
@@ -176,16 +168,18 @@ class ControllerData
         }
     }
 
-    public function deleteStudent(){
-        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+    public function deleteStudent()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $maSV = $_GET['MaSV'];
             $this->process->deleteStudent($maSV);
             header('location: index.php?page=Student');
         }
     }
 
-    public function detailStudent(){
-        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+    public function detailStudent()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $maSV = $_REQUEST['MaSV'];
             $arr = $this->process->informationStudent($maSV);
             var_dump($arr);
@@ -194,51 +188,45 @@ class ControllerData
         }
     }
 
-    public function addScore(){
-        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+    public function addScore()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $maSV = $_GET['MaSV'];
-//            $_SESSION['sv'] = $maSV;
-//            $module1 = $_REQUEST['module1'];
-//            $_SESSION['md1'] = $module1;
-//            $module2 = $_REQUEST['module2'];
-//            $_SESSION['md2'] = $module2;
-//            $module3 = $_REQUEST['module3'];
-//            $_SESSION['md3'] = $module3;
             $_SESSION['sv'] = $maSV;
             $student = $this->process->getIDStudent($maSV);
             $selectScore = $this->process->getScore($maSV);
             include "view/student/score.php";
         } else {
             $maSV = $_SESSION['sv'];
-            $module1 = $_SESSION['md1'];
-            $module2 = $_POST['module2'];
-            $module3 = $_POST['module3'];
-            var_dump($module1);
+            if ($_REQUEST['module1'] == '') {
+                $module1 = null;
+            } else {
+                $module1 = $_REQUEST['module1'];
+            }
+
+            if ($_REQUEST['module2'] == '') {
+                $module2 = null;
+            } else {
+                $module2 = $_REQUEST['module2'];
+            }
+
+            if ($_REQUEST['module3'] == '') {
+                $module3 = null;
+            } else {
+                $module3 = $_REQUEST['module3'];
+            }
+
+            $score = new Score($maSV, $module1, $module2, $module3);
+            $this->process->addScore($score);
+            header('location: index.php?page=Student');
+
             include "view/student/score.php";
         }
     }
-//
-//            if (isset($_SESSION['md1'])){
-//                $module1 = $_SESSION['md1'];
-//            } else {
-//                $module1 = $_POST['module1'];
-//            }
-//            if (isset($_SESSION['md2'])){
-//                $module2 = $_SESSION['md2'];
-//            } else {
-//                $module2 = $_POST['module2'];
-//            }
-//            if (isset($_SESSION['md3'])){
-//                $module3 = $_SESSION['md3'];
-//            } else {
-//                $module3 = $_POST['module3'];
-//            }
-
-
 
     public function findStudent()
     {
-        if (isset($_REQUEST['keyword'])){
+        if (isset($_REQUEST['keyword'])) {
             $keyword = $_REQUEST['keyword'];
             $students = $this->process->findStudent($keyword);
             include "view/student/viewStudent.php";
@@ -249,33 +237,35 @@ class ControllerData
         }
     }
 
-    public function viewAllCourse(){
-        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+    public function viewAllCourse()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $viewCourse = $this->process->viewAllCourse();
-
             include "view/course/viewCourse.php";
         }
     }
-    public function addCourse(){
-        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+
+    public function addCourse()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             include "view/course/addCourse.php";
         } else {
             $maKH = $_REQUEST['maKH'];
             $tenKH = $_REQUEST['tenKH'];
             $description = $_REQUEST['text'];
 
-            $course = new Course($maKH,$tenKH,$description);
-
+            $course = new Course($maKH, $tenKH, $description);
             $this->process->addCourseDB($course);
             $result = 'Add Completed';
             include "view/course/addCourse.php";
         }
     }
 
-    public function editCourse(){
-        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+    public function editCourse()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $maKH = $_REQUEST['MaKH'];
-            $_SESSION['kh']= $maKH;
+            $_SESSION['kh'] = $maKH;
             $course = $this->process->viewCourse($maKH);
             var_dump($course);
             include "view/course/editCourse.php";
@@ -291,8 +281,9 @@ class ControllerData
         }
     }
 
-    public function viewDetailCourse(){
-        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+    public function viewDetailCourse()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $maKH = $_REQUEST['MaKH'];
             $detailCourse = $this->process->viewDetailCourse($maKH);
             include "view/course/viewDetailCourse.php";

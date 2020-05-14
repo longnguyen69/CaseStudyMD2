@@ -20,7 +20,7 @@
                     <input type="text" class="form-control" name="tenLop" placeholder="Nhập tên lớp" required>
                 </div>
                 <div class="form-group">
-                    <label>Khoa Hoc</label>
+                    <label>Khóa Học</label>
                     <select class="custom-select" name="khoaHoc">
                         <?php foreach ($kH as $key): ?>
                             <option value="<?php echo $key['MaKH']?>"><?php echo $key['TenKH'] ?></option>
@@ -36,6 +36,7 @@
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary" name="create">Thêm mới</button>
+                <a href="./index.php?page=lop" class="btn btn-dark">Cancel</a>
             </form>
         </div>
     </div>

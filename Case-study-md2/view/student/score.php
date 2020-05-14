@@ -12,8 +12,7 @@
                 </div>
                 <div class="form-group">
                     <label>Tên Sinh Viên</label>
-                    <input type="text" class="form-control" name="tenSV" value="<?php echo $student['TenSV'] ?>"
-                           readonly>
+                    <input type="text" class="form-control" name="tenSV" value="<?php echo $student['TenSV'] ?>" readonly>
                 </div>
 
                 <div class="form-group">
@@ -38,7 +37,7 @@
                     } ?>>
                 </div>
                 <button type="submit" class="btn btn-primary" name="create" >Thêm mới</button>
-
+                <a href="./index.php?page=Student" class="btn btn-dark">Cancel</a>
             </form>
         </div>
     </div>

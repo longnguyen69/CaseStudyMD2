@@ -185,17 +185,16 @@ class ProcessDB
     public function addScoreStudent($maSV)
     {
         $default = null;
-        $sql = "INSERT INTO `Diem`(`MaSV`, `MonHoc`, `Diem1`, `Diem2`, `Diem3`) VALUES (?,?,?,?,?)";
+        $sql = "INSERT INTO `Diem`(`MaSV`, `Module1`, `Module2`, `Module3`) VALUES (?,?,?,?)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $maSV);
         $stmt->bindParam(2, $default);
         $stmt->bindParam(3, $default);
         $stmt->bindParam(4, $default);
-        $stmt->bindParam(5, $default);
         $stmt->execute();
     }
 
-    // lay thong tin bang diem
+    // lay thong tin bang diem cua mot sinh vien
     public function getScore($maSV)
     {
         $sql = "SELECT * FROM `Diem` WHERE MaSV ='$maSV'";

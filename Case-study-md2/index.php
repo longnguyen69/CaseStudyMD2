@@ -2,6 +2,7 @@
 session_start();
 require "model/Room.php";
 require "model/Student.php";
+require "model/Score.php";
 require "model/Course.php";
 require "model/connectDB/ConnectDB.php";
 require "model/workDB/ProcessDB.php";

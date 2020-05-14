@@ -24,7 +24,11 @@
                     <th scope="row"><?php echo ++$key ?></th>
                     <td><?php echo $values['MaSV'] ?></td>
                     <td><?php echo $values['TenSV'] ?></td>
-                    <td><?php echo $values['GioiTinh'] ?></td>
+                    <?php if ($values['GioiTinh'] == 1): ?>
+                        <td><?php echo 'Nam'?></td>
+                    <?php else:?>
+                        <td><?php echo 'Nữ'?></td>
+                    <?php endif;?>
                     <td><?php echo $values['NgaySinh'] ?></td>
                     <td><?php echo $values['QueQuan'] ?></td>
                     <td><?php echo $values['TenLop'] ?></td>
