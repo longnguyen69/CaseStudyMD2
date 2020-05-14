@@ -1,11 +1,9 @@
 <?php
-
 if (isset($_SESSION['user'])){
     header('location: view/list.php');
 }
-
-
 ?>
+
 <!doctype html>
 <html lang="en">
 <head>

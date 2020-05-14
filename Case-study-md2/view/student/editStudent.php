@@ -46,7 +46,6 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-
                 <button type="submit" class="btn btn-primary" value="update">Update</button>
             </form>
         </div>

@@ -8,6 +8,7 @@ use dbStudent\ConnectDB;
 use model\Room;
 use model\Student;
 use model\Score;
+use model\Admin;
 
 class ProcessDB
 {
@@ -191,7 +192,6 @@ class ProcessDB
         $stmt->bindParam(4, $default);
         $stmt->bindParam(5, $default);
         $stmt->execute();
-//        $stmt = $this->conn->query($sql);
     }
 
     // lay thong tin bang diem
@@ -221,5 +221,19 @@ class ProcessDB
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll();
 
+    }
+
+    public function changePass($newPass)
+    {
+//        $sql = "UPDATE `Users` SET `id`= id,`UserName`= 'admin',`Password` = ? WHERE id = 1";
+//        $stmt = $this->conn->prepare($sql);
+//        $stmt->bindParam(1, $data->password);
+//        $stmt->execute();
+
+        $sql = "UPDATE `Users` SET `Password` = :Password WHERE id = 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(array(
+            'Password' => $newPass
+        ));
     }
 }

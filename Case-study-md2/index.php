@@ -56,6 +56,8 @@ require "controller/ControllerData.php";
                         <a class="dropdown-item"
                            href="view/admin/startbootstrap-sb-admin-2-gh-pages/index.html">Setting</a>
                         <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="index.php?page=changePass">Change Password</a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="./index.php?page=logout">Logout</a>
                     </div>
                 </li>
@@ -131,6 +133,9 @@ switch ($page) {
         break;
     case 'detail':
         $controller->detailStudent();
+        break;
+    case 'changePass':
+        $controller->changePass();
         break;
 }
 ?>

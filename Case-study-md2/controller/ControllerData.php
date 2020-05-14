@@ -3,6 +3,7 @@
 namespace control;
 
 use dbStudent\ConnectDB;
+use model\Admin;
 use model\Room;
 use model\Student;
 use wordDB\ProcessDB;
@@ -34,7 +35,7 @@ class ControllerData
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             unset($_SESSION['user']);
-            header('location: index.php');
+            header('location: ./index.php?page=login');
         }
     }
 
@@ -230,6 +231,18 @@ class ControllerData
             $students = $this->process->getStudent();
             include "view/student/viewStudent.php";
 
+        }
+    }
+
+    public function changePass()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            include "view/admin/changePass.php";
+        } else {
+            $newPass = $_POST['newPass'];
+            $this->process->changePass($newPass);
+            $message = "Change Pass Completed";
+            include "view/admin/changePass.php";
         }
     }
 }
