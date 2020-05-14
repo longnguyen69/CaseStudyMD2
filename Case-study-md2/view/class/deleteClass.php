@@ -4,6 +4,6 @@
     <input type="hidden" name="maLop" value="<?php echo $room->maLop ?>"/>
     <div class="form-group">
         <input type="submit" value="Delete" class="btn btn-danger"/>
-        <a class="btn btn-default" href="index.php">Cancel</a>
+        <a class="btn btn-default" href="./index.php?page=lop">Cancel</a>
     </div>
 </form>

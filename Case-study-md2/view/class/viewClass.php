@@ -7,7 +7,8 @@
     <div class="card-body">
         <div class="col-md-8" style="margin-left: 15%">
             <div class="col-md-2">
-                <button type="submit" class="btn btn-outline-success" onclick="window.location.href='./index.php?page=create'">
+                <button type="submit" class="btn btn-outline-success"
+                        onclick="window.location.href='./index.php?page=create'">
                     Thêm Mới
                 </button>
             </div>

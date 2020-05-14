@@ -8,6 +8,7 @@ class Room
     public $tenLop;
     public $khoaHoc;
     public $heDT;
+
     public function __construct($maLop, $tenLop, $khoaHoc, $heDT)
     {
         $this->maLop = $maLop;

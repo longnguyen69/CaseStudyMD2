@@ -14,19 +14,6 @@
                     <input type="text" class="form-control" name="tenLop" value="<?php echo $room['TenLop'] ?>">
                 </div>
                 <div class="form-group">
-                    <label>Khoa</label>
-                    <select class="custom-select" name="khoa">
-                        <?php foreach ($khoa as $key): ?>
-                            <option
-                                <?php if ($key['MaKhoa'] == $room['Khoa']): ?>
-                                    selected
-                                <?php endif; ?>
-                                    value="<?php echo $key['MaKhoa'] ?>"><?php echo $key['TenKhoa'] ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="form-group">
                     <label>Khóa Học</label>
                     <select class="custom-select" name="khoaHoc">
                         <?php foreach ($khoaHocs as $khoahoc): ?>

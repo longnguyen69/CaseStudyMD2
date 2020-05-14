@@ -53,7 +53,8 @@ require "controller/ControllerData.php";
                         <?php echo strtoupper($_SESSION['user']) ?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="view/admin/startbootstrap-sb-admin-2-gh-pages/index.html">Setting</a>
+                        <a class="dropdown-item"
+                           href="view/admin/startbootstrap-sb-admin-2-gh-pages/index.html">Setting</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="./index.php?page=logout">Logout</a>
                     </div>

@@ -100,13 +100,11 @@ class ControllerData
             $maLop = $_REQUEST['MaLop'];
             $_SESSION['maLop'] = $maLop;
             $room = $this->process->getIdLop($maLop);
-//            var_dump($maLop);
             include "view/class/deleteClass.php";
         } else {
             $maLop1 = $_POST['maLop'];
-//           var_dump($maLop1);
             $this->process->deleteClass($maLop1);
-            header('location: index.php');
+            header('location: ./index.php?page=lop');
         }
     }
 
@@ -175,26 +173,27 @@ class ControllerData
         }
     }
 
-    public function deleteStudent(){
-        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+    public function deleteStudent()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $maSV = $_GET['MaSV'];
-            var_dump($maSV);
-            die();
             $this->process->deleteStudent($maSV);
-            header('location: index.php?page=Student');
+            header('location: ./index.php?page=Student');
         }
     }
 
-    public function detailStudent(){
-        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+    public function detailStudent()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $maSV = $_REQUEST['MaSV'];
             $students = $this->process->informationStudent($maSV);
             include "view/student/viewStudent.php";
         }
     }
 
-    public function addScore(){
-        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+    public function addScore()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $maSV = $_GET['MaSV'];
 //            $module1 = $_REQUEST['module1'];
 //            $_SESSION['md1'] = $module1;
@@ -226,16 +225,15 @@ class ControllerData
 //            }
 
 
-
     public function findStudent()
     {
-        if (isset($_REQUEST['keyword'])){
+        if (isset($_REQUEST['keyword'])) {
             $keyword = $_REQUEST['keyword'];
             $students = $this->process->findStudent($keyword);
-            include "view/student/viewStudent.php";
+            include "view/student/viewListStudent.php";
         } else {
             $students = $this->process->getStudent();
-            include "view/student/viewStudent.php";
+            include "view/student/viewListStudent.php";
 
         }
     }

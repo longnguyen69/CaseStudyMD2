@@ -5,14 +5,6 @@
     </div>
     <br>
     <div class="col-md-2"><button type="submit" class="btn btn-outline-success" onclick="window.location.href='./index.php?page=createStudent'">Thêm Mới</button></div>
-    <div class="col-12 col-md-6">
-        <form class="form-inline my-2 my-lg-0" method="get">
-            <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="Search"
-                   aria-label="Search"
-                   value="<?php echo isset($_REQUEST['keyword']) ? $_REQUEST['keyword'] : '' ?>">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
     <div class="card-body">
         <table class="table table-striped">
             <thead>

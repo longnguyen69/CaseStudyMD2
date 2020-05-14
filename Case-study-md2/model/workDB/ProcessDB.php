@@ -78,7 +78,7 @@ class ProcessDB
         $sql = "DELETE FROM `Lop` WHERE MaLop = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $maLop);
-        return $stmt->execute();
+        $stmt->execute();
     }
 
     // hien thi khoa hoc
@@ -126,76 +126,84 @@ class ProcessDB
     }
 
     // them moi sinh vien
-    public function addStudent($student){
+    public function addStudent($student)
+    {
         $sql = "INSERT INTO `Sinhvien`(`MaSV`, `TenSV`, `GioiTinh`, `NgaySinh`, `QueQuan`, `Lop`) VALUES (?,?,?,?,?,?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1,$student->maSV);
-        $stmt->bindParam(2,$student->tenSV);
-        $stmt->bindParam(3,$student->gioiTinh);
-        $stmt->bindParam(4,$student->ngaySinh);
-        $stmt->bindParam(5,$student->queQuan);
-        $stmt->bindParam(6,$student->lop);
+        $stmt->bindParam(1, $student->maSV);
+        $stmt->bindParam(2, $student->tenSV);
+        $stmt->bindParam(3, $student->gioiTinh);
+        $stmt->bindParam(4, $student->ngaySinh);
+        $stmt->bindParam(5, $student->queQuan);
+        $stmt->bindParam(6, $student->lop);
         $stmt->execute();
     }
 
-    public function getIDStudent($maSV){
+    public function getIDStudent($maSV)
+    {
         $sql = "SELECT * FROM `Sinhvien` WHERE MaSV = '$maSV'";
         $stmt = $this->conn->query($sql);
         return $stmt->fetch();
     }
 
     // sua thong tin sinh vien
-    public function updateStudent($student){
+    public function updateStudent($student)
+    {
         $sql = "UPDATE `Sinhvien` SET `MaSV`=?,`TenSV`=?,`GioiTinh`=?,`NgaySinh`=?,`QueQuan`=?,`Lop`=? WHERE `MaSV`=?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1,$student->maSV);
-        $stmt->bindParam(2,$student->tenSV);
-        $stmt->bindParam(3,$student->gioiTinh);
-        $stmt->bindParam(4,$student->ngaySinh);
-        $stmt->bindParam(5,$student->queQuan);
-        $stmt->bindParam(6,$student->lop);
-        $stmt->bindParam(7,$student->maSV);
+        $stmt->bindParam(1, $student->maSV);
+        $stmt->bindParam(2, $student->tenSV);
+        $stmt->bindParam(3, $student->gioiTinh);
+        $stmt->bindParam(4, $student->ngaySinh);
+        $stmt->bindParam(5, $student->queQuan);
+        $stmt->bindParam(6, $student->lop);
+        $stmt->bindParam(7, $student->maSV);
         $stmt->execute();
     }
 
     // view info sinh vien
-    public function detailStudent($maSV){
+    public function detailStudent($maSV)
+    {
         $sql = "";
     }
 
     // xoa sinh vien
-    public function deleteStudent($maSV){
-        $sql = "DELETE FROM `Sinhvien` WHERE `MaSV`=?";
+    public function deleteStudent($maSV)
+    {
+        $sql = "DELETE FROM `Sinhvien` WHERE `MaSV`= ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1,$maSV);
+        $stmt->bindParam(1, $maSV);
         $stmt->execute();
     }
 
 
     // detail sinh vien
-    public function informationStudent($maSV){
+    public function informationStudent($maSV)
+    {
         $sql = "SELECT * FROM Khoahoc JOIN Lop ON Khoahoc.MaKH = Lop.KhoaHoc JOIN Sinhvien ON Lop.MaLop = Sinhvien.Lop JOIN Diem ON Sinhvien.MaSV = Diem.MaSV WHERE Sinhvien.MaSV = '$maSV'";
         $stmt = $this->conn->query($sql);
         return $stmt->fetch();
     }
 
     //them sinh vien vao bang diem
-    public function addScoreStudent($maSV){
+    public function addScoreStudent($maSV)
+    {
         $default = null;
         $default2 = 0;
         $sql = "INSERT INTO `Diem`(`MaSV`, `MonHoc`, `Diem1`, `Diem2`, `Diem3`) VALUES (?,?,?,?,?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1,$maSV);
-        $stmt->bindParam(2,$default);
-        $stmt->bindParam(3,$default);
-        $stmt->bindParam(4,$default);
-        $stmt->bindParam(5,$default);
+        $stmt->bindParam(1, $maSV);
+        $stmt->bindParam(2, $default);
+        $stmt->bindParam(3, $default);
+        $stmt->bindParam(4, $default);
+        $stmt->bindParam(5, $default);
         $stmt->execute();
 //        $stmt = $this->conn->query($sql);
     }
 
     // lay thong tin bang diem
-    public function getScore($maSV){
+    public function getScore($maSV)
+    {
         $sql = "SELECT * FROM `Diem` WHERE MaSV ='$maSV'";
         $stmt = $this->conn->query($sql);
         return $stmt->fetch();
@@ -213,11 +221,12 @@ class ProcessDB
         $stmt->bindParam(5, $score->maSV);
         $stmt->execute();
     }
+
     public function findStudent($keyword)
     {
-        $sql = "SELECT * FROM `Sinhvien` WHERE TenSV LIKE '%$keyword'";
+        $sql = "SELECT * FROM `Sinhvien` WHERE TenSV LIKE '%$keyword%'";
         $stmt = $this->conn->query($sql);
-        return$stmt->fetchAll();
+        return $stmt->fetchAll();
 
     }
 }
