@@ -2,6 +2,7 @@
 session_start();
 require "model/Room.php";
 require "model/Student.php";
+require "model/Course.php";
 require "model/connectDB/ConnectDB.php";
 require "model/workDB/ProcessDB.php";
 require "controller/ControllerData.php";
@@ -38,7 +39,7 @@ require "controller/ControllerData.php";
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="index.php?page=lop">Lớp</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Khóa Học</a>
+                    <a class="dropdown-item" href="index.php?page=course">Khóa Học</a>
                 </div>
             </li>
         </ul>
@@ -127,6 +128,18 @@ switch ($page) {
         break;
     case 'detail':
         $controller->detailStudent();
+        break;
+    case 'course':
+        $controller->viewAllCourse();
+        break;
+    case 'addCourse':
+        $controller->addCourse();
+        break;
+    case 'editCourse':
+        $controller->editCourse();
+        break;
+    case 'detailCourse':
+        $controller->viewDetailCourse();
         break;
 }
 ?>

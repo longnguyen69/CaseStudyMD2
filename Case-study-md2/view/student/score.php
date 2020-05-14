@@ -8,33 +8,33 @@
             <form method="post">
                 <div class="form-group">
                     <label>Mã Sinh Viên</label>
-                    <input type="text" class="form-control" name="maSV" value="<?php echo $student['MaSV'] ?>" disabled>
+                    <input type="text" class="form-control" name="maSV" value="<?php echo $student['MaSV'] ?>" readonly>
                 </div>
                 <div class="form-group">
                     <label>Tên Sinh Viên</label>
                     <input type="text" class="form-control" name="tenSV" value="<?php echo $student['TenSV'] ?>"
-                           disabled>
+                           readonly>
                 </div>
 
                 <div class="form-group">
                     <label>Module 1</label>
                     <input type="text" class="form-control" name="module1"
                            value="<?php echo $selectScore['Module1'] ?>" <?php if ($selectScore['Module1'] != null) {
-                        echo 'disabled';
-                    } ?>>
+                        echo 'readonly';
+                    } ?> >
                 </div>
                 <div class="form-group">
                     <label>Module 2</label>
                     <input type="text" class="form-control" name="module2"
                            value="<?php echo $selectScore['Module2'] ?>" <?php if ($selectScore['Module2'] != null) {
-                        echo 'disabled';
+                        echo 'readonly';
                     } ?>>
                 </div>
                 <div class="form-group">
                     <label>Module 3</label>
                     <input type="text" class="form-control" name="module3"
                            value="<?php echo $selectScore['Module3'] ?>" <?php if ($selectScore['Module3'] != null) {
-                        echo 'disabled';
+                        echo 'readonly';
                     } ?>>
                 </div>
                 <button type="submit" class="btn btn-primary" name="create" >Thêm mới</button>

@@ -3,6 +3,7 @@
 namespace control;
 
 use dbStudent\ConnectDB;
+use model\Course;
 use model\Room;
 use model\Student;
 use wordDB\ProcessDB;
@@ -245,6 +246,56 @@ class ControllerData
             $students = $this->process->getStudent();
             include "view/student/viewStudent.php";
 
+        }
+    }
+
+    public function viewAllCourse(){
+        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+            $viewCourse = $this->process->viewAllCourse();
+
+            include "view/course/viewCourse.php";
+        }
+    }
+    public function addCourse(){
+        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+            include "view/course/addCourse.php";
+        } else {
+            $maKH = $_REQUEST['maKH'];
+            $tenKH = $_REQUEST['tenKH'];
+            $description = $_REQUEST['text'];
+
+            $course = new Course($maKH,$tenKH,$description);
+
+            $this->process->addCourseDB($course);
+            $result = 'Add Completed';
+            include "view/course/addCourse.php";
+        }
+    }
+
+    public function editCourse(){
+        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+            $maKH = $_REQUEST['MaKH'];
+            $_SESSION['kh']= $maKH;
+            $course = $this->process->viewCourse($maKH);
+            var_dump($course);
+            include "view/course/editCourse.php";
+        } else {
+            $maKH = $_SESSION['kh'];
+            $tenKH = $_REQUEST['tenKH'];
+            $description = $_REQUEST['text'];
+
+            $course = new Course($maKH, $tenKH, $description);
+            $this->process->editCourse($course);
+            header('location: ./index.php?page=course');
+            include "view/course/editCourse.php";
+        }
+    }
+
+    public function viewDetailCourse(){
+        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+            $maKH = $_REQUEST['MaKH'];
+            $detailCourse = $this->process->viewDetailCourse($maKH);
+            include "view/course/viewDetailCourse.php";
         }
     }
 }

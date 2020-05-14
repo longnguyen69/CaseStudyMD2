@@ -223,4 +223,49 @@ class ProcessDB
         return $stmt->fetchAll();
 
     }
+
+    // xem cac khoa hoc
+    public function viewAllCourse(){
+        $sql = "SELECT * FROM `Khoahoc`";
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll();
+    }
+
+    // them khoa hoc
+    public function addCourseDB($course){
+        $sql = "INSERT INTO `Khoahoc`(`MaKH`, `TenKH`, `MoTa`) VALUES (?,?,?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1,$course->maKH);
+        $stmt->bindParam(2,$course->tenKH);
+        $stmt->bindParam(3,$course->description);
+        $stmt->execute();
+    }
+
+    // thong tin mot khoa hoc
+    public function viewCourse($maKH){
+        $sql = "SELECT * FROM `Khoahoc` WHERE `MaKH`=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1,$maKH);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+    // sua khoa hoc
+    public function editCourse($course){
+        $sql = "UPDATE `Khoahoc` SET `MaKH`=?,`TenKH`=?,`MoTa`=? WHERE `MaKH`=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1,$course->maKH);
+        $stmt->bindParam(2,$course->tenKH);
+        $stmt->bindParam(3,$course->description);
+        $stmt->bindParam(4,$course->maKH);
+        $stmt->execute();
+    }
+
+    // xem chi tiet khoa hco
+    public function viewDetailCourse($maKH){
+        $sql = "SELECT * FROM `Khoahoc` WHERE MaKH = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1,$maKH);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 }
