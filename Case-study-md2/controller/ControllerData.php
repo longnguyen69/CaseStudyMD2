@@ -178,8 +178,6 @@ class ControllerData
     public function deleteStudent(){
         if ($_SERVER['REQUEST_METHOD'] == 'GET'){
             $maSV = $_GET['MaSV'];
-            var_dump($maSV);
-            die();
             $this->process->deleteStudent($maSV);
             header('location: index.php?page=Student');
         }
@@ -188,7 +186,9 @@ class ControllerData
     public function detailStudent(){
         if ($_SERVER['REQUEST_METHOD'] == 'GET'){
             $maSV = $_REQUEST['MaSV'];
-            $students = $this->process->informationStudent($maSV);
+            $arr = $this->process->informationStudent($maSV);
+            var_dump($arr);
+
             include "view/student/viewStudent.php";
         }
     }
@@ -196,6 +196,7 @@ class ControllerData
     public function addScore(){
         if ($_SERVER['REQUEST_METHOD'] == 'GET'){
             $maSV = $_GET['MaSV'];
+//            $_SESSION['sv'] = $maSV;
 //            $module1 = $_REQUEST['module1'];
 //            $_SESSION['md1'] = $module1;
 //            $module2 = $_REQUEST['module2'];
@@ -205,6 +206,13 @@ class ControllerData
             $_SESSION['sv'] = $maSV;
             $student = $this->process->getIDStudent($maSV);
             $selectScore = $this->process->getScore($maSV);
+            include "view/student/score.php";
+        } else {
+            $maSV = $_SESSION['sv'];
+            $module1 = $_SESSION['md1'];
+            $module2 = $_POST['module2'];
+            $module3 = $_POST['module3'];
+            var_dump($module1);
             include "view/student/score.php";
         }
     }

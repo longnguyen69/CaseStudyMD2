@@ -37,7 +37,6 @@
                         echo 'disabled';
                     } ?>>
                 </div>
-
                 <button type="submit" class="btn btn-primary" name="create" >Thêm mới</button>
 
             </form>
