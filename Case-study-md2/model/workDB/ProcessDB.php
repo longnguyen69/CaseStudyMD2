@@ -7,6 +7,7 @@ namespace wordDB;
 use dbStudent\ConnectDB;
 use model\Room;
 use model\Student;
+use model\Score;
 
 class ProcessDB
 {
@@ -167,6 +168,47 @@ class ProcessDB
         $sql = "DELETE FROM `Sinhvien` WHERE `MaSV`=?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1,$maSV);
+        $stmt->execute();
+    }
+
+    // detail sinh vien
+    public function informationStudent($maSV){
+        $sql = "SELECT * FROM Khoahoc JOIN Lop ON Khoahoc.MaKH = Lop.KhoaHoc JOIN Sinhvien ON Lop.MaLop = Sinhvien.Lop JOIN Diem ON Sinhvien.MaSV = Diem.MaSV WHERE Sinhvien.MaSV = '$maSV'";
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetch();
+    }
+
+    //them sinh vien vao bang diem
+    public function addScoreStudent($maSV){
+        $default = null;
+        $default2 = 0;
+        $sql = "INSERT INTO `Diem`(`MaSV`, `MonHoc`, `Diem1`, `Diem2`, `Diem3`) VALUES (?,?,?,?,?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1,$maSV);
+        $stmt->bindParam(2,$default);
+        $stmt->bindParam(3,$default);
+        $stmt->bindParam(4,$default);
+        $stmt->bindParam(5,$default);
+        $stmt->execute();
+//        $stmt = $this->conn->query($sql);
+    }
+
+    // lay thong tin bang diem
+    public function getScore($maSV){
+        $sql = "SELECT * FROM `Diem` WHERE MaSV ='$maSV'";
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetch();
+    }
+
+    // update diem thi cho sinh vien
+    public function addScore($score){
+        $sql = "UPDATE `Diem` SET `MaSV`=?,`Module1`=?,`Module2`=?,`Module3`=? WHERE `MaSV`=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1,$score->maSV);
+        $stmt->bindParam(2,$score->module1);
+        $stmt->bindParam(3,$score->module2);
+        $stmt->bindParam(4,$score->module3);
+        $stmt->bindParam(5,$score->maSV);
         $stmt->execute();
     }
 }

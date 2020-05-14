@@ -115,6 +115,12 @@ switch ($page) {
     case 'deleteSV':
         $controller->deleteStudent();
         break;
+    case 'AddScore':
+        $controller->addScore();
+        break;
+    case 'detail':
+        $controller->detailStudent();
+        break;
 }
 ?>
 

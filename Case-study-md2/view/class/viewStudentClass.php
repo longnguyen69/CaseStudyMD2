@@ -20,6 +20,8 @@
                 <th scope="col">Hệ Đào Tạo</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -32,9 +34,10 @@
                     <td><?php echo $values['GioiTinh'] ?></td>
                     <td><?php echo $values['TenKH'] ?></td>
                     <td><?php echo $values['TenHe'] ?></td>
-                    <td><a href="index.php?page=edit&MaLop=<?php echo $values['MaLop']?>" class="btn btn-warning btn-sm">Update</a></td>
+                    <td><a href="index.php?page=edit&page=editSV&MaSV=<?php echo $values['MaSV']?>" class="btn btn-warning btn-sm">Update</a></td>
                     <td><a class="btn btn-warning btn-sm" href="index.php?page=delete&MaLop=<?php echo $values['MaLop']?>">Delete</a></td>
                     <td><a class="btn btn-warning btn-sm" href="index.php?page=studentClass&MaLop=<?php echo $values['MaLop']?>">Detail</a></td>
+                    <td><a class="btn btn-warning btn-sm" href="index.php?page=AddScore&MaSV=<?php echo $values['MaSV']?>">Add Score</a></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
