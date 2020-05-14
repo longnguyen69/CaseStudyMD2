@@ -223,17 +223,23 @@ class ProcessDB
 
     }
 
-    public function changePass($newPass)
+    public function checkPass($user)
     {
-//        $sql = "UPDATE `Users` SET `id`= id,`UserName`= 'admin',`Password` = ? WHERE id = 1";
-//        $stmt = $this->conn->prepare($sql);
-//        $stmt->bindParam(1, $data->password);
-//        $stmt->execute();
-
-        $sql = "UPDATE `Users` SET `Password` = :Password WHERE id = 1";
+        $sql = "SELECT `Password` FROM `Users` WHERE UserName = :UserName";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(array(
-            'Password' => $newPass
+            'UserName' => $user
+        ));
+        return $stmt->fetch();
+    }
+
+    public function changePass($newPass, $user)
+    {
+        $sql = "UPDATE `Users` SET `Password` = :Password WHERE UserName = :UserName";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(array(
+            'Password' => $newPass,
+            'UserName' => $user
         ));
     }
 }

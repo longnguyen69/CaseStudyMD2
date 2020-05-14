@@ -102,12 +102,14 @@ if (isset($_SESSION['user'])){
             <p style="color: red; font-size: 25px;"><?php echo $error; ?></p>
             <?php } ?>
             <div class="account-wall">
-                <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
+                <img class="profile-img"
+                     src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
                      alt="">
                 <form class="form-signin" method="post">
-                    <input type="text" class="form-control" placeholder="Email" name="UserName">
-                    <input type="password" class="form-control" placeholder="Password" name="password">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" name="login" value="log">Sign in</button>
+                    <input type="text" class="form-control" name="UserName">
+                    <input type="password" class="form-control" name="password">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" name="login" value="log">Sign in
+                    </button>
                     <label class="checkbox pull-left">
                         <input type="checkbox" value="remember-me">
                         Remember me

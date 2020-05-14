@@ -239,10 +239,20 @@ class ControllerData
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             include "view/admin/changePass.php";
         } else {
-            $newPass = $_POST['newPass'];
-            $this->process->changePass($newPass);
-            $message = "Change Pass Completed";
-            include "view/admin/changePass.php";
+            $check = $this->process->checkPass($_SESSION['user']);
+            if ($_REQUEST['oldPass'] != $check['Password']) {
+                $error = "Incorrect password";
+                include "view/admin/changePass.php";
+            } elseif ($_REQUEST['oldPass'] == $_REQUEST['newPass']) {
+                $error2 = "The old password cannot match the new password";
+                include "view/admin/changePass.php";
+            } else {
+                $newPass = $_POST['newPass'];
+                $this->process->changePass($newPass, $_SESSION['user']);
+                $message = "";
+                include "view/admin/changePass.php";
+            }
+
         }
     }
 }
