@@ -27,33 +27,40 @@ require "controller/ControllerData.php";
         <li class="nav-item">
             <a class="nav-link active" href="./index.php">Trang chủ</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="index.php?page=lop">Lớp</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Khóa học</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="index.php?page=Student">Sinh viên</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Môn học</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Khoa</a>
-        </li>
-        <li class="nav-item">
-            <p class="nav-link" href="#"></p>
-        </li>
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Danh Sách
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="index.php?page=Student">Sinh Viên</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="index.php?page=lop">Lớp</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Khóa Học</a>
+                </div>
+            </li>
+        </ul>
         <li class="nav-item">
             <p class="nav-link" href="#"></p>
         </li>
         <?php if (isset($_SESSION['user'])): ?>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <?php echo strtoupper($_SESSION['user']) ?>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="view/admin/startbootstrap-sb-admin-2-gh-pages/index.html">Setting</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="./index.php?page=logout">Logout</a>
+                    </div>
+                </li>
+            </ul>
             <li class="nav-item">
-                <a class="nav-link" href="#"><?php echo $_SESSION['user'] ?></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="./index.php?page=logout">Logout</a>
+                <p class="nav-link" href="#"></p>
             </li>
         <?php else: ?>
             <li class="nav-item">

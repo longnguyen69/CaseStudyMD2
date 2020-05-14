@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        Các Lớp Học Trong Trường
+        <h3>Danh Sách Lớp Học</h3>
     </div>
     <br>
 

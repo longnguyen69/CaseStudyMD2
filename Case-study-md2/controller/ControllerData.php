@@ -184,6 +184,7 @@ class ControllerData
             header('location: index.php?page=Student');
         }
     }
+
     public function detailStudent(){
         if ($_SERVER['REQUEST_METHOD'] == 'GET'){
             $maSV = $_REQUEST['MaSV'];
@@ -204,13 +205,9 @@ class ControllerData
             $_SESSION['sv'] = $maSV;
             $student = $this->process->getIDStudent($maSV);
             $selectScore = $this->process->getScore($maSV);
-
             include "view/student/score.php";
-        } else {
-            $maSV = $_SESSION['sv'];
-            $module1 = $_POST['module1'];
-            $module2 = $_POST['module2'];
-            $module3 = $_POST['module3'];
+        }
+    }
 //
 //            if (isset($_SESSION['md1'])){
 //                $module1 = $_SESSION['md1'];
@@ -228,8 +225,18 @@ class ControllerData
 //                $module3 = $_POST['module3'];
 //            }
 
-            var_dump($module2);
-            die();
+
+
+    public function findStudent()
+    {
+        if (isset($_REQUEST['keyword'])){
+            $keyword = $_REQUEST['keyword'];
+            $students = $this->process->findStudent($keyword);
+            include "view/student/viewStudent.php";
+        } else {
+            $students = $this->process->getStudent();
+            include "view/student/viewStudent.php";
+
         }
     }
 }

@@ -171,6 +171,7 @@ class ProcessDB
         $stmt->execute();
     }
 
+
     // detail sinh vien
     public function informationStudent($maSV){
         $sql = "SELECT * FROM Khoahoc JOIN Lop ON Khoahoc.MaKH = Lop.KhoaHoc JOIN Sinhvien ON Lop.MaLop = Sinhvien.Lop JOIN Diem ON Sinhvien.MaSV = Diem.MaSV WHERE Sinhvien.MaSV = '$maSV'";
@@ -201,14 +202,22 @@ class ProcessDB
     }
 
     // update diem thi cho sinh vien
-    public function addScore($score){
+    public function addScore($score)
+    {
         $sql = "UPDATE `Diem` SET `MaSV`=?,`Module1`=?,`Module2`=?,`Module3`=? WHERE `MaSV`=?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1,$score->maSV);
-        $stmt->bindParam(2,$score->module1);
-        $stmt->bindParam(3,$score->module2);
-        $stmt->bindParam(4,$score->module3);
-        $stmt->bindParam(5,$score->maSV);
+        $stmt->bindParam(1, $score->maSV);
+        $stmt->bindParam(2, $score->module1);
+        $stmt->bindParam(3, $score->module2);
+        $stmt->bindParam(4, $score->module3);
+        $stmt->bindParam(5, $score->maSV);
         $stmt->execute();
+    }
+    public function findStudent($keyword)
+    {
+        $sql = "SELECT * FROM `Sinhvien` WHERE TenSV LIKE '%$keyword'";
+        $stmt = $this->conn->query($sql);
+        return$stmt->fetchAll();
+
     }
 }

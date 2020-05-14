@@ -1,5 +1,4 @@
 <?php
-
 namespace dbStudent;
 
 use PDO;
@@ -12,8 +11,13 @@ class ConnectDB
 
     public function __construct()
     {
+
         $this->userName = 'root';
         $this->password = 'Adda@12354';
+
+        $this->userName = "root";
+        $this->password = "Adda@12354";
+
     }
 
     public function connect()
