@@ -123,6 +123,9 @@ switch ($page) {
     case 'deleteSV':
         $controller->deleteStudent();
         break;
+    case 'deleteSVClass':
+        $controller->deleteStudentInClass();
+        break;
     case 'AddScore':
         $controller->addScore();
         break;

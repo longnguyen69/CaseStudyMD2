@@ -100,11 +100,13 @@ class ControllerData
             $maLop = $_REQUEST['MaLop'];
             $_SESSION['maLop'] = $maLop;
             $room = $this->process->getIdLop($maLop);
+//            var_dump($maLop);
             include "view/class/deleteClass.php";
         } else {
             $maLop1 = $_POST['maLop'];
+//           var_dump($maLop1);
             $this->process->deleteClass($maLop1);
-            header('location: ./index.php?page=lop');
+            header('location: index.php');
         }
     }
 
@@ -139,8 +141,6 @@ class ControllerData
 
             $student = new Student($maSV, $tenSV, $gioiTinh, $ngaySinh, $queQuan, $maLop);
             $this->process->addStudent($student);
-//            var_dump($student->maSV);
-//            die();
             $this->process->addScoreStudent($student->maSV);
 
             $message = 'Add Complete';
@@ -182,11 +182,22 @@ class ControllerData
         }
     }
 
+    public function deleteStudentInClass()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $maSV = $_GET['MaSV'];
+            $this->process->deleteStudent($maSV);
+            header('location: ./index.php?page=studentClass&MaLop');
+        }
+    }
+
     public function detailStudent()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $maSV = $_REQUEST['MaSV'];
-            $students = $this->process->informationStudent($maSV);
+            $arr = $this->process->informationStudent($maSV);
+            var_dump($arr);
+
             include "view/student/viewStudent.php";
         }
     }
@@ -195,45 +206,29 @@ class ControllerData
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $maSV = $_GET['MaSV'];
-//            $module1 = $_REQUEST['module1'];
-//            $_SESSION['md1'] = $module1;
-//            $module2 = $_REQUEST['module2'];
-//            $_SESSION['md2'] = $module2;
-//            $module3 = $_REQUEST['module3'];
-//            $_SESSION['md3'] = $module3;
             $_SESSION['sv'] = $maSV;
             $student = $this->process->getIDStudent($maSV);
             $selectScore = $this->process->getScore($maSV);
             include "view/student/score.php";
+        } else {
+            $maSV = $_SESSION['sv'];
+            $module1 = $_SESSION['md1'];
+            $module2 = $_POST['module2'];
+            $module3 = $_POST['module3'];
+            var_dump($module1);
+            include "view/student/score.php";
         }
     }
-//
-//            if (isset($_SESSION['md1'])){
-//                $module1 = $_SESSION['md1'];
-//            } else {
-//                $module1 = $_POST['module1'];
-//            }
-//            if (isset($_SESSION['md2'])){
-//                $module2 = $_SESSION['md2'];
-//            } else {
-//                $module2 = $_POST['module2'];
-//            }
-//            if (isset($_SESSION['md3'])){
-//                $module3 = $_SESSION['md3'];
-//            } else {
-//                $module3 = $_POST['module3'];
-//            }
-
 
     public function findStudent()
     {
         if (isset($_REQUEST['keyword'])) {
             $keyword = $_REQUEST['keyword'];
             $students = $this->process->findStudent($keyword);
-            include "view/student/viewListStudent.php";
+            include "view/student/viewStudent.php";
         } else {
             $students = $this->process->getStudent();
-            include "view/student/viewListStudent.php";
+            include "view/student/viewStudent.php";
 
         }
     }

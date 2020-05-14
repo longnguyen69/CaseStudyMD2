@@ -42,13 +42,13 @@
                     <td><?php echo $values['TenLop'] ?></td>
                     <td>
                         <a class="btn btn-warning btn-sm"
-                           href="index.php?page=editSV&MaSV=<?php echo $values['MaSV'] ?>">Update Info</a>
-                        <a class="btn btn-warning btn-sm" onclick="return confirm('Are you sure delete?')"
-                           href="index.php?page=deleteSV&MaSV=<?php echo $values['MaSV'] ?>">Delete</a>
-                        <a class="btn btn-warning btn-sm"
+                           href="index.php?page=editSV&MaSV=<?php echo $values['MaSV'] ?>">Update</a>
+                        <a class="btn btn-primary btn-sm"
                            href="index.php?page=detail&MaSV=<?php echo $values['MaSV'] ?>">Detail</a>
-                        <a class="btn btn-warning btn-sm"
+                        <a class="btn btn-success btn-sm"
                            href="index.php?page=AddScore&MaSV=<?php echo $values['MaSV'] ?>">Add Score</a>
+                        <a class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
+                           href="index.php?page=deleteSV&MaSV=<?php echo $values['MaSV'] ?>">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

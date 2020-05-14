@@ -161,12 +161,6 @@ class ProcessDB
         $stmt->execute();
     }
 
-    // view info sinh vien
-    public function detailStudent($maSV)
-    {
-        $sql = "";
-    }
-
     // xoa sinh vien
     public function deleteStudent($maSV)
     {
@@ -175,7 +169,6 @@ class ProcessDB
         $stmt->bindParam(1, $maSV);
         $stmt->execute();
     }
-
 
     // detail sinh vien
     public function informationStudent($maSV)
