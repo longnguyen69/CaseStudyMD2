@@ -8,6 +8,7 @@ use dbStudent\ConnectDB;
 use model\Room;
 use model\Student;
 use model\Score;
+use model\Admin;
 
 class ProcessDB
 {
@@ -292,7 +293,7 @@ class ProcessDB
         $stmt->execute();
     }
 
-    // Kiem tra password co trung khong
+    // Kiem tra password user co trung khong
     public function checkPass($user)
     {
         $sql = "SELECT `Password` FROM `Users` WHERE UserName = :UserName";
@@ -303,7 +304,7 @@ class ProcessDB
         return $stmt->fetch();
     }
 
-    // Thay doi password
+    // Thay doi password user
     public function changePass($newPass, $user)
     {
         $sql = "UPDATE `Users` SET `Password` = :Password WHERE UserName = :UserName";
@@ -312,5 +313,15 @@ class ProcessDB
             'Password' => $newPass,
             'UserName' => $user
         ));
+    }
+
+    // Tao user moi
+    public function createUser($user)
+    {
+        $sql = "INSERT INTO `Users`(`id`, `UserName`, `Password`) VALUES (id,?,?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, $user->username);
+        $stmt->bindParam(2, $user->password);
+        $stmt->execute();
     }
 }

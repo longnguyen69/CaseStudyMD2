@@ -2,6 +2,7 @@
 session_start();
 require "model/Room.php";
 require "model/Student.php";
+require "model/Admin.php";
 require "model/Score.php";
 require "model/Course.php";
 require "model/connectDB/ConnectDB.php";
@@ -59,6 +60,8 @@ require "controller/ControllerData.php";
                            href="view/admin/startbootstrap-sb-admin-2-gh-pages/index.html">Setting</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="index.php?page=changePass">Change Password</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="index.php?page=createUser">Create User</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="./index.php?page=logout">Logout</a>
                     </div>
@@ -183,6 +186,9 @@ switch ($page) {
         }
     case 'changePass':
         $controller->changePass();
+        break;
+    case 'createUser':
+        $controller->createUser();
         break;
 }
 ?>

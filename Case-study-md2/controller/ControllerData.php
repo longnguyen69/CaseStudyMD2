@@ -7,6 +7,7 @@ use model\Course;
 use model\Room;
 use model\Score;
 use model\Student;
+use model\Admin;
 use wordDB\ProcessDB;
 
 class ControllerData
@@ -324,6 +325,21 @@ class ControllerData
                 $message = "";
                 include "view/admin/changePass.php";
             }
+        }
+    }
+
+    public function createUser()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            include "view/admin/addUser.php";
+        } else {
+            $username = $_REQUEST['username'];
+            $password = $_REQUEST['password'];
+
+            $user = new Admin($username, $password);
+            $this->process->createUser($user);
+            $message = 'Tạo Thành Công';
+            include "view/admin/addUser.php";
         }
     }
 }
