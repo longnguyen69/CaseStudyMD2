@@ -21,6 +21,9 @@
                            value="<?php echo $selectScore['Module1'] ?>" <?php if ($selectScore['Module1'] != null) {
                         echo 'readonly';
                     } ?> >
+                    <?php if (isset($msgScore1)): ?>
+                        <span style="color: red"><?php echo $msgScore1 ?></span>
+                    <?php endif; ?>
                 </div>
                 <div class="form-group">
                     <label>Module 2</label>
@@ -28,6 +31,9 @@
                            value="<?php echo $selectScore['Module2'] ?>" <?php if ($selectScore['Module2'] != null) {
                         echo 'readonly';
                     } ?>>
+                    <?php if (isset($msgScore2)): ?>
+                        <span style="color: red"><?php echo $msgScore2 ?></span>
+                    <?php endif; ?>
                 </div>
                 <div class="form-group">
                     <label>Module 3</label>
@@ -35,6 +41,9 @@
                            value="<?php echo $selectScore['Module3'] ?>" <?php if ($selectScore['Module3'] != null) {
                         echo 'readonly';
                     } ?>>
+                    <?php if (isset($msgScore3)): ?>
+                        <span style="color: red"><?php echo $msgScore3 ?></span>
+                    <?php endif; ?>
                 </div>
                 <button type="submit" class="btn btn-primary" name="create" >Thêm mới</button>
                 <a href="./index.php?page=Student" class="btn btn-dark">Cancel</a>

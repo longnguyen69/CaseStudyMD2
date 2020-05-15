@@ -247,12 +247,23 @@ class ControllerData
             } else {
                 $module3 = $_REQUEST['module3'];
             }
+            if (!$this->validateScore($module1) && $module1 > 10) {
+                $msgScore1 = "Điểm chỉ có thẻ là số và không lớn quá 10";
+                include "view/student/score.php";
+            } elseif ($this->validateScore($module2) && $module2 > 10) {
+                $msgScore2 = "Điểm chỉ có thẻ là số và không lớn quá 10";
+                include "view/student/score.php";
+            } elseif ($this->validateScore($module3) && $module3 > 10) {
+                $msgScore3 = "Điểm chỉ có thẻ là số và không lớn quá 10";
+                include "view/student/score.php";
+            } else {
+                $score = new Score($maSV, $module1, $module2, $module3);
+                $this->process->addScore($score);
+                header('location: index.php?page=Student');
 
-            $score = new Score($maSV, $module1, $module2, $module3);
-            $this->process->addScore($score);
-            header('location: index.php?page=Student');
+                include "view/student/score.php";
+            }
 
-            include "view/student/score.php";
         }
     }
 
@@ -285,11 +296,18 @@ class ControllerData
             $maKH = $_REQUEST['maKH'];
             $tenKH = $_REQUEST['tenKH'];
             $description = $_REQUEST['text'];
-
-            $course = new Course($maKH, $tenKH, $description);
-            $this->process->addCourseDB($course);
-            $result = 'Add Completed';
-            include "view/course/addCourse.php";
+            if (!$this->validateStudentID($maKH)) {
+                $msgID = "Mã phải viết hoa, không chứa ký tự đặc biệt và không dài quá 6";
+                include "view/course/addCourse.php";
+            } elseif (empty($tenKH)) {
+                $msgName = "Tên không được để trống";
+                include "view/course/addCourse.php";
+            } else {
+                $course = new Course($maKH, $tenKH, $description);
+                $this->process->addCourseDB($course);
+                $result = 'Add Completed';
+                include "view/course/addCourse.php";
+            }
         }
     }
 
@@ -378,6 +396,16 @@ class ControllerData
     public function validateStudentName($str)
     {
         $regexp = '/^[A-Za-z]+([\ A-Za-z]+)*$/';
+        if (preg_match($regexp, $str)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function validateScore($str)
+    {
+        $regexp = '/^[0-9]{1}$/';
         if (preg_match($regexp, $str)) {
             return true;
         } else {
