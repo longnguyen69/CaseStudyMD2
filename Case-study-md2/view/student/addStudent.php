@@ -14,10 +14,16 @@
                 <div class="form-group">
                     <label>Mã Sinh Viên</label>
                     <input type="text" class="form-control" name="maSV"  placeholder="Nhập mã sinh viên" required>
+                    <?php if (isset($msgID)): ?>
+                        <span style="color: red"><?php echo $msgID ?></span>
+                    <?php endif; ?>
                 </div>
                 <div class="form-group">
                     <label>Tên Sinh Viên</label>
                     <input type="text" class="form-control" name="tenSV" placeholder="Nhập tên sinh viên" required>
+                    <?php if (isset($msgName)): ?>
+                        <span style="color: red"><?php echo $msgName ?></span>
+                    <?php endif; ?>
                 </div>
                 <div class="form-group">
                     <label>Giới Tính</label>
@@ -29,10 +35,16 @@
                 <div class="form-group">
                     <label>Ngày Sinh</label>
                     <input type="date" class="form-control" name="ngaySinh">
+                    <?php if (isset($msgBirth)): ?>
+                        <span style="color: red"><?php echo $msgBirth ?></span>
+                    <?php endif; ?>
                 </div>
                 <div class="form-group">
                     <label>Quê Quán/Địa Chỉ</label>
                     <input type="text" class="form-control" name="queQuan">
+                    <?php if (isset($msgCountry)): ?>
+                        <span style="color: red"><?php echo $msgCountry ?></span>
+                    <?php endif; ?>
                 </div>
                 <div class="form-group">
                     <label>Lớp</label>

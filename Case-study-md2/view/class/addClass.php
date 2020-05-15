@@ -14,10 +14,16 @@
                 <div class="form-group">
                     <label>Mã Lớp</label>
                     <input type="text" class="form-control" name="maLop"  placeholder="Nhập mã lớp" required>
+                    <?php if (isset($msgID)): ?>
+                        <span style="color: red"><?php echo $msgID ?></span>
+                    <?php endif; ?>
                 </div>
                 <div class="form-group">
                     <label>Tên Lớp</label>
                     <input type="text" class="form-control" name="tenLop" placeholder="Nhập tên lớp" required>
+                    <?php if (isset($msgName)): ?>
+                        <span style="color: red"><?php echo $msgName ?></span>
+                    <?php endif; ?>
                 </div>
                 <div class="form-group">
                     <label>Khóa Học</label>

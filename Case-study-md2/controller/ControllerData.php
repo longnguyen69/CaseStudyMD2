@@ -61,10 +61,18 @@ class ControllerData
             $khoaHoc = $_REQUEST['khoaHoc'];
             $heDT = $_REQUEST['heDT'];
 
-            $room = new Room($maLop, $tenLop, $khoaHoc, $heDT);
-            $this->process->addClass($room);
-            $message = "Add Completed";
-            include 'view/class/addClass.php';
+            if (!$this->validateStudentID($maLop)) {
+                $msgID = "Mã phải viết hoa, không chứa ký tự đặc biệt và không dài quá 6";
+                include "view/class/addClass.php";
+            } elseif (!$this->validateStudentName($tenLop)) {
+                $msgName = "Tên không được có số và ký tự đặc biệt";
+                include "view/class/addClass.php";
+            } else {
+                $room = new Room($maLop, $tenLop, $khoaHoc, $heDT);
+                $this->process->addClass($room);
+                $message = "Add Completed";
+                include 'view/class/addClass.php';
+            }
         }
     }
 
@@ -137,11 +145,26 @@ class ControllerData
             $ngaySinh = $_POST['ngaySinh'];
             $queQuan = $_POST['queQuan'];
             $maLop = $_POST['lop'];
-            $student = new Student($maSV, $tenSV, $gioiTinh, $ngaySinh, $queQuan, $maLop);
-            $this->process->addStudent($student);
-            $this->process->addScoreStudent($student->maSV);
-            $message = 'Add Complete';
-            include "view/student/addStudent.php";
+            if (!$this->validateStudentID($maSV)) {
+                $msgID = "Mã phải viết hoa, không chứa ký tự đặc biệt và không dài quá 6";
+                include "view/student/addStudent.php";
+            } elseif (!$this->validateStudentName($tenSV)) {
+                $msgName = "Tên không được có số và ký tự đặc biệt";
+                include "view/student/addStudent.php";
+            } elseif (empty($ngaySinh)) {
+                $msgBirth = "Ngày sinh không được để trống";
+                include "view/student/addStudent.php";
+            } elseif (!$this->validateStudentName($queQuan)) {
+                $msgCountry = "Quê quán/Địa chỉ không được có số và ký tự đặc biệt";
+                include "view/student/addStudent.php";
+            } else {
+                $student = new Student($maSV, $tenSV, $gioiTinh, $ngaySinh, $queQuan, $maLop);
+                $this->process->addStudent($student);
+                $this->process->addScoreStudent($student->maSV);
+                $message = 'Add Complete';
+                include "view/student/addStudent.php";
+            }
+
         }
     }
 
@@ -340,6 +363,25 @@ class ControllerData
             $this->process->createUser($user);
             $message = 'Tạo Thành Công';
             include "view/admin/addUser.php";
+        }
+    }
+
+    public function validateStudentID($str)
+    {
+        $regexp = '/^[A-Z0-9]{1,6}$/';
+        if (preg_match($regexp, $str)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function validateStudentName($str)
+    {
+        $regexp = '/^[A-Za-z]+([\ A-Za-z]+)*$/';
+        if (preg_match($regexp, $str)) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

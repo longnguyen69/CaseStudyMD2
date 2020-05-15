@@ -10,10 +10,6 @@
             }
             ?>
             <form method="post">
-<!--                <div class="form-group">-->
-<!--                    <label>Mã Sinh Viên</label>-->
-<!--                    <input type="text" class="form-control" name="maSV"  placeholder="Nhập mã sinh viên" required>-->
-<!--                </div>-->
                 <div class="form-group">
                     <label>Tên Đăng Nhập</label>
                     <input type="text" class="form-control" name="username" required>
