@@ -4,7 +4,10 @@
         <div class="col-md-6" style="margin-left: 25%;">
 
             <form method="post" >
-                <?php if (isset($message)) echo $message; ?>
+                <?php if (isset($message)): ?>
+                    <script>alert('Cập nhập thành công!');
+                        window.location = "index.php?page=lop";</script>
+                <?php endif; ?>
                 <div class="form-group" >
                     <label>Mã Lớp</label>
                     <input type="text" class="form-control" name="maLop" value="<?php echo $room['MaLop'] ?>" disabled>
@@ -12,19 +15,6 @@
                 <div class="form-group">
                     <label>Tên Lớp</label>
                     <input type="text" class="form-control" name="tenLop" value="<?php echo $room['TenLop'] ?>">
-                </div>
-                <div class="form-group">
-                    <label>Khoa</label>
-                    <select class="custom-select" name="khoa">
-                        <?php foreach ($khoa as $key): ?>
-                            <option
-                                <?php if ($key['MaKhoa'] == $room['Khoa']): ?>
-                                    selected
-                                <?php endif; ?>
-                                    value="<?php echo $key['MaKhoa'] ?>"><?php echo $key['TenKhoa'] ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
                 </div>
                 <div class="form-group">
                     <label>Khóa Học</label>
@@ -39,7 +29,6 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label>Hệ Đào Tạo</label>
                     <select class="custom-select" name="heDT">

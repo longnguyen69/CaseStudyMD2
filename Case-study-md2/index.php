@@ -55,7 +55,10 @@ require "controller/ControllerData.php";
                         <?php echo strtoupper($_SESSION['user']) ?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="view/admin/startbootstrap-sb-admin-2-gh-pages/index.html">Setting</a>
+                        <a class="dropdown-item"
+                           href="view/admin/startbootstrap-sb-admin-2-gh-pages/index.html">Setting</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="index.php?page=changePass">Change Password</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="./index.php?page=logout">Logout</a>
                     </div>
@@ -116,14 +119,32 @@ switch ($page) {
         $controller->viewStudent();
         break;
     case 'createStudent':
-        $controller->addStudent();
-        break;
+        if (isset($_SESSION['user'])) {
+            $controller->addStudent();
+            break;
+        } else {
+            $controller->login();
+            break;
+        }
     case 'editSV':
-        $controller->editStudent();
-        break;
+        if (isset($_SESSION['user'])) {
+            $controller->editStudent();
+            break;
+        } else {
+            $controller->login();
+            break;
+        }
     case 'deleteSV':
         $controller->deleteStudent();
         break;
+    case 'deleteSVClass':
+        if (isset($_SESSION['user'])) {
+            $controller->deleteStudentInClass();
+            break;
+        } else {
+            $controller->login();
+            break;
+        }
     case 'AddScore':
         $controller->addScore();
         break;
@@ -134,13 +155,34 @@ switch ($page) {
         $controller->viewAllCourse();
         break;
     case 'addCourse':
-        $controller->addCourse();
-        break;
+        if (isset($_SESSION['user'])) {
+            $controller->addCourse();
+            break;
+        } else {
+            $controller->login();
+            break;
+        }
     case 'editCourse':
-        $controller->editCourse();
-        break;
+        if (isset($_SESSION['user'])) {
+            $controller->editCourse();
+            break;
+        } else {
+            $controller->login();
+            break;
+        }
     case 'detailCourse':
         $controller->viewDetailCourse();
+        break;
+    case 'deleteCourse':
+        if (isset($_SESSION['user'])) {
+            $controller->deleteCourse();
+            break;
+        } else {
+            $controller->login();
+            break;
+        }
+    case 'changePass':
+        $controller->changePass();
         break;
 }
 ?>

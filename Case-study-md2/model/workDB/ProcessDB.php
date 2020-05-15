@@ -170,13 +170,22 @@ class ProcessDB
         $stmt->execute();
     }
 
+    // xoa diem
+    public function deleteScore($maSV)
+    {
+        $sql = "DELETE FROM `Diem` WHERE `MaSV` = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, $maSV);
+        $stmt->execute();
+    }
+
     // detail sinh vien
     public function informationStudent($maSV)
     {
         $sql = "SELECT * FROM Khoahoc JOIN Lop ON Khoahoc.MaKH = Lop.KhoaHoc JOIN Sinhvien ON Lop.MaLop = Sinhvien.Lop 
                 JOIN Diem ON Sinhvien.MaSV = Diem.MaSV WHERE Sinhvien.MaSV = :maSV";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam('maSV',$maSV);
+        $stmt->bindParam('maSV', $maSV);
         $stmt->execute();
         return $stmt->fetch();
     }
@@ -224,47 +233,84 @@ class ProcessDB
     }
 
     // xem cac khoa hoc
-    public function viewAllCourse(){
+    public function viewAllCourse()
+    {
         $sql = "SELECT * FROM `Khoahoc`";
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll();
     }
 
     // them khoa hoc
-    public function addCourseDB($course){
+    public function addCourseDB($course)
+    {
         $sql = "INSERT INTO `Khoahoc`(`MaKH`, `TenKH`, `MoTa`) VALUES (?,?,?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1,$course->maKH);
-        $stmt->bindParam(2,$course->tenKH);
-        $stmt->bindParam(3,$course->description);
+        $stmt->bindParam(1, $course->maKH);
+        $stmt->bindParam(2, $course->tenKH);
+        $stmt->bindParam(3, $course->description);
         $stmt->execute();
     }
 
     // thong tin mot khoa hoc
-    public function viewCourse($maKH){
+    public function viewCourse($maKH)
+    {
         $sql = "SELECT * FROM `Khoahoc` WHERE `MaKH`=?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1,$maKH);
+        $stmt->bindParam(1, $maKH);
         $stmt->execute();
         return $stmt->fetch();
     }
+
     // sua khoa hoc
-    public function editCourse($course){
+    public function editCourse($course)
+    {
         $sql = "UPDATE `Khoahoc` SET `MaKH`=?,`TenKH`=?,`MoTa`=? WHERE `MaKH`=?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1,$course->maKH);
-        $stmt->bindParam(2,$course->tenKH);
-        $stmt->bindParam(3,$course->description);
-        $stmt->bindParam(4,$course->maKH);
+        $stmt->bindParam(1, $course->maKH);
+        $stmt->bindParam(2, $course->tenKH);
+        $stmt->bindParam(3, $course->description);
+        $stmt->bindParam(4, $course->maKH);
         $stmt->execute();
     }
 
     // xem chi tiet khoa hco
-    public function viewDetailCourse($maKH){
+    public function viewDetailCourse($maKH)
+    {
         $sql = "SELECT * FROM `Khoahoc` WHERE MaKH = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1,$maKH);
+        $stmt->bindParam(1, $maKH);
         $stmt->execute();
         return $stmt->fetch();
+    }
+
+    // xoa khoa hoc
+    public function deleteCourse($maKH)
+    {
+        $sql = "DELETE FROM `Khoahoc` WHERE `MaKH` = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, $maKH);
+        $stmt->execute();
+    }
+
+    // Kiem tra password co trung khong
+    public function checkPass($user)
+    {
+        $sql = "SELECT `Password` FROM `Users` WHERE UserName = :UserName";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(array(
+            'UserName' => $user
+        ));
+        return $stmt->fetch();
+    }
+
+    // Thay doi password
+    public function changePass($newPass, $user)
+    {
+        $sql = "UPDATE `Users` SET `Password` = :Password WHERE UserName = :UserName";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(array(
+            'Password' => $newPass,
+            'UserName' => $user
+        ));
     }
 }

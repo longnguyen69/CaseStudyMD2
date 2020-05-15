@@ -3,15 +3,6 @@
         <h3>Thông Tin Học Viên</h3>
     </div>
     <br>
-
-    <div class="col-12 col-md-6">
-        <form class="form-inline my-2 my-lg-0" method="get">
-            <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="Search"
-                   aria-label="Search"
-                   value="<?php echo isset($_REQUEST['keyword']) ? $_REQUEST['keyword'] : '' ?>">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
     <div class="card-body col-6">
         <table class="table table-striped">
             <thead>
@@ -26,9 +17,9 @@
             <tr>
                 <th scope="col">Giới Tính</th>
                 <?php if ($arr['GioiTinh'] == 1): ?>
-                    <td><?php echo 'Nam'?></td>
-                <?php else:?>
-                    <td><?php echo "Nữ"?></td>
+                    <td><?php echo 'Nam' ?></td>
+                <?php else: ?>
+                    <td><?php echo "Nữ" ?></td>
                 <?php endif; ?>
 
 

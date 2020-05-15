@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label>Ngày Sinh</label>
-                    <input type="text" class="form-control" name="ngaySinh" placeholder="yyyy-mm-dd">
+                    <input type="date" class="form-control" name="ngaySinh">
                 </div>
                 <div class="form-group">
                     <label>Quê Quán/Địa Chỉ</label>

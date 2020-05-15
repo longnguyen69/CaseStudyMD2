@@ -3,7 +3,11 @@
         Các Khóa Học Trong Trung Tâm
     </div>
     <br>
-    <div class="col-md-2"><button type="submit" class="btn btn-outline-success" onclick="window.location.href='./index.php?page=addCourse'">Thêm Mới</button></div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-outline-success"
+                onclick="window.location.href='./index.php?page=addCourse'">Thêm Mới
+        </button>
+    </div>
     <div class="card-body">
         <table class="table table-striped">
             <thead>
@@ -24,10 +28,12 @@
                     <td><?php echo $values['MaKH'] ?></td>
                     <td><?php echo $values['TenKH'] ?></td>
 
-                    <td><a class="btn btn-warning btn-sm" href="index.php?page=editCourse&MaKH=<?php echo $values['MaKH'] ?>">Update</a></td>
-                    <td><a class="btn btn-warning btn-sm" href="index.php?page=deleteCourse&MaKH=<?php echo $values['MaKH'] ?>">Delete</a></td>
-                    <td><a class="btn btn-warning btn-sm" href="index.php?page=detailCourse&MaKH=<?php echo $values['MaKH'] ?>">Detail</a></td>
-
+                    <td><a class="btn btn-warning btn-sm"
+                           href="index.php?page=editCourse&MaKH=<?php echo $values['MaKH'] ?>">Update</a></td>
+                    <td><a class="btn btn-primary btn-sm"
+                           href="index.php?page=detailCourse&MaKH=<?php echo $values['MaKH'] ?>">Detail</a></td>
+                    <td><a class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn xóa?')"
+                           href="index.php?page=deleteCourse&MaKH=<?php echo $values['MaKH'] ?>">Delete</a></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

@@ -5,8 +5,9 @@
 
             <form method="post" action="./index.php?page=editSV">
                 <?php if (isset($messageSt)): ?>
-                    <script>alert('Add Complete!'); window.location="index.php?page=Student";</script>
-                <?php endif;?>
+                    <script>alert('Cập nhập thành công!');
+                        window.location = "index.php?page=Student";</script>
+                <?php endif; ?>
                 <div class="form-group">
                     <label>Mã Sinh Viên</label>
                     <input type="text" class="form-control" name="maSV" value="<?php echo $students['MaSV'] ?>"
@@ -29,7 +30,7 @@
                 </div>
                 <div class="form-group">
                     <label>Ngày Sinh</label>
-                    <input type="text" class="form-control" name="ngaySinh" value="<?php echo $students['NgaySinh'] ?>">
+                    <input type="date" class="form-control" name="ngaySinh" value="<?php echo $students['NgaySinh'] ?>">
                 </div>
                 <div class="form-group">
                     <label>Quê Quán</label>
@@ -39,7 +40,7 @@
                     <label>Lớp</label>
                     <select class="custom-select" name="lop">
                         <?php foreach ($class as $classes): ?>
-                            <option value="<?php echo $classes['MaLop'] ?>" <?php  if ($classes['MaLop'] == $room->maLop) {
+                            <option value="<?php echo $classes['MaLop'] ?>" <?php if ($classes['MaLop'] == $room->maLop) {
                                 echo "selected";
                             } ?>><?php echo $classes['TenLop'] ?>
                             </option>
@@ -47,7 +48,7 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary" value="update">Update</button>
+                <button type="submit" class="btn btn-primary" value="update">Cập Nhập</button>
                 <a href="./index.php?page=Student" class="btn btn-dark">Cancel</a>
             </form>
         </div>

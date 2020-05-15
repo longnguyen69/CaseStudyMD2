@@ -36,7 +36,7 @@ class ControllerData
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             unset($_SESSION['user']);
-            header('location: index.php');
+            header('location: ./index.php?page=login');
         }
     }
 
@@ -172,8 +172,18 @@ class ControllerData
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $maSV = $_GET['MaSV'];
+            $this->process->deleteScore($maSV);
             $this->process->deleteStudent($maSV);
             header('location: index.php?page=Student');
+        }
+    }
+
+    public function deleteStudentInClass()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $maSV = $_GET['MaSV'];
+            $this->process->deleteStudent($maSV);
+            header('location: index.php?page=studentClass&MaLop');
         }
     }
 
@@ -182,8 +192,6 @@ class ControllerData
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $maSV = $_REQUEST['MaSV'];
             $arr = $this->process->informationStudent($maSV);
-            var_dump($arr);
-
             include "view/student/viewStudent.php";
         }
     }
@@ -267,7 +275,6 @@ class ControllerData
             $maKH = $_REQUEST['MaKH'];
             $_SESSION['kh'] = $maKH;
             $course = $this->process->viewCourse($maKH);
-            var_dump($course);
             include "view/course/editCourse.php";
         } else {
             $maKH = $_SESSION['kh'];
@@ -287,6 +294,36 @@ class ControllerData
             $maKH = $_REQUEST['MaKH'];
             $detailCourse = $this->process->viewDetailCourse($maKH);
             include "view/course/viewDetailCourse.php";
+        }
+    }
+
+    public function deleteCourse()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $maKH = $_GET['MaKH'];
+            $this->process->deleteCourse($maKH);
+            header('location: index.php?page=course');
+        }
+    }
+
+    public function changePass()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            include "view/admin/changePass.php";
+        } else {
+            $check = $this->process->checkPass($_SESSION['user']);
+            if ($_REQUEST['oldPass'] != $check['Password']) {
+                $error = "Mật khẩu cũ không khớp";
+                include "view/admin/changePass.php";
+            } elseif ($_REQUEST['oldPass'] == $_REQUEST['newPass']) {
+                $error2 = "Mật khẩu mới không được trùng mật khẩu cũ";
+                include "view/admin/changePass.php";
+            } else {
+                $newPass = $_POST['newPass'];
+                $this->process->changePass($newPass, $_SESSION['user']);
+                $message = "";
+                include "view/admin/changePass.php";
+            }
         }
     }
 }
