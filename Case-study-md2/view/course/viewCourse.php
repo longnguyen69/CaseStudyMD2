@@ -14,7 +14,7 @@
             <tr>
                 <th scope="col">STT</th>
                 <th scope="col">Mã KH</th>
-                <th scope="col">Tên Khóa Họ</th>
+                <th scope="col">Tên Khóa Học</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -27,13 +27,17 @@
                     <th scope="row"><?php echo ++$key ?></th>
                     <td><?php echo $values['MaKH'] ?></td>
                     <td><?php echo $values['TenKH'] ?></td>
-
-                    <td><a class="btn btn-warning btn-sm"
-                           href="index.php?page=editCourse&MaKH=<?php echo $values['MaKH'] ?>">Update</a></td>
+                    <?php if (isset($_SESSION['user'])):?>
+                        <td><a class="btn btn-warning btn-sm"
+                               href="index.php?page=editCourse&MaKH=<?php echo $values['MaKH'] ?>">Update</a></td>
+                    <?php endif;?>
                     <td><a class="btn btn-primary btn-sm"
                            href="index.php?page=detailCourse&MaKH=<?php echo $values['MaKH'] ?>">Detail</a></td>
-                    <td><a class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn xóa?')"
-                           href="index.php?page=deleteCourse&MaKH=<?php echo $values['MaKH'] ?>">Delete</a></td>
+                    <?php if (isset($_SESSION['user'])):?>
+                        <td><a class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn xóa?')"
+                               href="index.php?page=deleteCourse&MaKH=<?php echo $values['MaKH'] ?>">Delete</a></td>
+                    <?php endif;?>
+
                 </tr>
             <?php endforeach; ?>
             </tbody>

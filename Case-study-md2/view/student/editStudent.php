@@ -3,11 +3,10 @@
     <div class="card-body">
         <div class="col-md-6" style="margin-left: 25%;">
 
-            <form method="post" action="./index.php?page=editSV">
+            <form method="post" enctype="multipart/form-data" action="./index.php?page=editSV">
                 <?php if (isset($messageSt)): ?>
-                    <script>alert('Cập nhập thành công!');
-                        window.location = "index.php?page=Student";</script>
-                <?php endif; ?>
+                    <script>alert('Chỉnh sửa thành công!'); window.location="index.php?page=Student";</script>
+                <?php endif;?>
                 <div class="form-group">
                     <label>Mã Sinh Viên</label>
                     <input type="text" class="form-control" name="maSV" value="<?php echo $students['MaSV'] ?>"
@@ -21,16 +20,16 @@
                     <label>Giới Tính</label>
                     <select class="custom-select" name="gioiTinh">
                         <option <?php if ($students['GioiTinh'] == 1) echo 'selected' ?>
-                                value="1">Nam
+                            value="1">Nam
                         </option>
                         <option <?php if ($students['GioiTinh'] == 0) echo 'selected' ?>
-                                value="0">Nu
+                            value="0">Nu
                         </option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Ngày Sinh</label>
-                    <input type="date" class="form-control" name="ngaySinh" value="<?php echo $students['NgaySinh'] ?>">
+                    <input type="text" class="form-control" name="ngaySinh" value="<?php echo $students['NgaySinh'] ?>">
                 </div>
                 <div class="form-group">
                     <label>Quê Quán</label>
@@ -40,15 +39,19 @@
                     <label>Lớp</label>
                     <select class="custom-select" name="lop">
                         <?php foreach ($class as $classes): ?>
-                            <option value="<?php echo $classes['MaLop'] ?>" <?php if ($classes['MaLop'] == $room->maLop) {
+                            <option value="<?php echo $classes['MaLop'] ?>" <?php  if ($classes['MaLop'] == $room->maLop) {
                                 echo "selected";
                             } ?>><?php echo $classes['TenLop'] ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-
-                <button type="submit" class="btn btn-primary" value="update">Cập Nhập</button>
+                <div class="form-group">
+                    <label>Ảnh Đại Diện</label>
+                    <img src="uploads/<?php echo $students['avatar']?>" style="width: 50px; height: 60px;">
+                    <input type="file" class="form-control" name="image" value="<?php echo $students['avatar']?>">
+                </div>
+                <button type="submit" class="btn btn-primary" value="update">Update</button>
                 <a href="./index.php?page=Student" class="btn btn-dark">Cancel</a>
             </form>
         </div>

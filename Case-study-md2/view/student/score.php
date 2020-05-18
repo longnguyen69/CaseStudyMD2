@@ -3,7 +3,11 @@
         <div class="col-12">
             <h1>Thêm Điểm Cho Sinh Viên</h1>
         </div>
-
+        <?php
+            if (isset($message)){
+                echo "<p class='alert-info'>$message</p>";
+            }
+        ?>
         <div class="col-8" style="margin-left: 15%">
             <form method="post">
                 <div class="form-group">
@@ -21,9 +25,6 @@
                            value="<?php echo $selectScore['Module1'] ?>" <?php if ($selectScore['Module1'] != null) {
                         echo 'readonly';
                     } ?> >
-                    <?php if (isset($msgScore1)): ?>
-                        <span style="color: red"><?php echo $msgScore1 ?></span>
-                    <?php endif; ?>
                 </div>
                 <div class="form-group">
                     <label>Module 2</label>
@@ -31,9 +32,6 @@
                            value="<?php echo $selectScore['Module2'] ?>" <?php if ($selectScore['Module2'] != null) {
                         echo 'readonly';
                     } ?>>
-                    <?php if (isset($msgScore2)): ?>
-                        <span style="color: red"><?php echo $msgScore2 ?></span>
-                    <?php endif; ?>
                 </div>
                 <div class="form-group">
                     <label>Module 3</label>
@@ -41,9 +39,6 @@
                            value="<?php echo $selectScore['Module3'] ?>" <?php if ($selectScore['Module3'] != null) {
                         echo 'readonly';
                     } ?>>
-                    <?php if (isset($msgScore3)): ?>
-                        <span style="color: red"><?php echo $msgScore3 ?></span>
-                    <?php endif; ?>
                 </div>
                 <button type="submit" class="btn btn-primary" name="create" >Thêm mới</button>
                 <a href="./index.php?page=Student" class="btn btn-dark">Cancel</a>

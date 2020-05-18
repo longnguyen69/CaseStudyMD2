@@ -1,7 +1,7 @@
 <?php
 
 
-namespace model;
+namespace connected;
 
 
 class Score

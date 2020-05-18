@@ -8,6 +8,9 @@
             if (isset($message)){
                 echo "<p class='alert-info'>$message</p>";
             }
+            if (isset($errorCreateUser)){
+                echo "<p style='color: red;'>$errorCreateUser</p>";
+            }
             ?>
             <form method="post">
                 <div class="form-group">
@@ -23,3 +26,4 @@
             </form>
         </div>
     </div>
+</div>

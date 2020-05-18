@@ -1,9 +1,8 @@
 <?php
 if (isset($_SESSION['user'])) {
     header('location: view/list.php');
-}
-?>
-
+    exit();
+} ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -97,9 +96,10 @@ if (isset($_SESSION['user'])) {
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
             <h1 class="text-center login-title">Login to continue </h1>
-            <?php if (isset($error)) { ?>
-                <p style="color: red; font-size: 25px;"><?php echo $error; ?></p>
-            <?php } ?>
+            <?php if (isset($error)): ?>
+                <script>alert('Sai tên đăng nhập hoặc mật khẩu!');
+                    window.location = "index.php?page=login";</script>
+            <?php endif; ?>
             <div class="account-wall">
                 <img class="profile-img"
                      src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
@@ -116,7 +116,6 @@ if (isset($_SESSION['user'])) {
                     <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
                 </form>
             </div>
-            <a href="#" class="text-center new-account">Create an account </a>
         </div>
     </div>
 </div>

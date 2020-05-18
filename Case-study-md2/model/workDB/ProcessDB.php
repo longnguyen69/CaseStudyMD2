@@ -5,10 +5,9 @@ namespace wordDB;
 //use dbStudent\ConnectDB;
 
 use dbStudent\ConnectDB;
-use model\Room;
-use model\Student;
-use model\Score;
-use model\Admin;
+use connected\Room;
+use connected\Student;
+use connected\Score;
 
 class ProcessDB
 {
@@ -110,7 +109,7 @@ class ProcessDB
     // hien thi hoc sinh trong lop
     public function getStudentClass($maLop)
     {
-        $sql = "select * from Sinhvien join Lop on Sinhvien.Lop = Lop.MaLop JOIN Khoahoc on Khoahoc.MaKH = Lop.KhoaHoc JOIN HeDT ON Lop.HeDT = HeDT.MaHe where MaLop = ?";
+        $sql = "SELECT * from Sinhvien join Lop on Sinhvien.Lop = Lop.MaLop JOIN Khoahoc on Khoahoc.MaKH = Lop.KhoaHoc JOIN HeDT ON Lop.HeDT = HeDT.MaHe JOIN Diem ON Diem.MaSV = Sinhvien.MaSV  where MaLop = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $maLop);
         $stmt->execute();
@@ -123,13 +122,38 @@ class ProcessDB
     {
         $sql = "SELECT * FROM `Sinhvien` join Lop on Sinhvien.Lop = Lop.MaLop";
         $stmt = $this->conn->query($sql);
-        return $stmt->fetchAll();
+        $results = $stmt->fetchAll();
+        $arr = [];
+        foreach ($results as $result){
+            $student = new Student($result['MaSV'],$result['TenSV'],$result['GioiTinh'],$result['NgaySinh'],$result['QueQuan'],$result['Lop'],$result['avatar']);
+            array_push($arr, $student);
+        }
+        return $arr;
+    }
+
+    // check sinh vien
+    public function checkStudent($maSV){
+        $sql = "SELECT * FROM `Sinhvien` WHERE MaSV = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1,$maSV);
+        $stmt->execute();
+        $stmt->fetch();
+        return $stmt->rowCount();
+    }
+    // check lop
+    public function checkClass($maLop){
+        $sql = "SELECT * FROM `Lop` WHERE MaLop=?";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->bindParam(1,$maLop);
+        $stmt->execute();
+        $stmt->fetch();
+        return $stmt->rowCount();
     }
 
     // them moi sinh vien
     public function addStudent($student)
     {
-        $sql = "INSERT INTO `Sinhvien`(`MaSV`, `TenSV`, `GioiTinh`, `NgaySinh`, `QueQuan`, `Lop`) VALUES (?,?,?,?,?,?)";
+        $sql = "INSERT INTO `Sinhvien`(`MaSV`, `TenSV`, `GioiTinh`, `NgaySinh`, `QueQuan`, `Lop`, `avatar`) VALUES (?,?,?,?,?,?,?)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $student->maSV);
         $stmt->bindParam(2, $student->tenSV);
@@ -137,6 +161,7 @@ class ProcessDB
         $stmt->bindParam(4, $student->ngaySinh);
         $stmt->bindParam(5, $student->queQuan);
         $stmt->bindParam(6, $student->lop);
+        $stmt->bindParam(7, $student->image);
         $stmt->execute();
     }
 
@@ -150,7 +175,7 @@ class ProcessDB
     // sua thong tin sinh vien
     public function updateStudent($student)
     {
-        $sql = "UPDATE `Sinhvien` SET `MaSV`=?,`TenSV`=?,`GioiTinh`=?,`NgaySinh`=?,`QueQuan`=?,`Lop`=? WHERE `MaSV`=?";
+        $sql = "UPDATE `Sinhvien` SET `MaSV`=?,`TenSV`=?,`GioiTinh`=?,`NgaySinh`=?,`QueQuan`=?,`Lop`=?, `avatar`=? WHERE `MaSV`=?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $student->maSV);
         $stmt->bindParam(2, $student->tenSV);
@@ -158,7 +183,8 @@ class ProcessDB
         $stmt->bindParam(4, $student->ngaySinh);
         $stmt->bindParam(5, $student->queQuan);
         $stmt->bindParam(6, $student->lop);
-        $stmt->bindParam(7, $student->maSV);
+        $stmt->bindParam(7, $student->image);
+        $stmt->bindParam(8, $student->maSV);
         $stmt->execute();
     }
 
@@ -227,18 +253,32 @@ class ProcessDB
 
     public function findStudent($keyword)
     {
-        $sql = "SELECT * FROM `Sinhvien` WHERE TenSV LIKE '%$keyword'";
+        $sql = "SELECT * FROM `Sinhvien` WHERE TenSV LIKE '%$keyword%'";
         $stmt = $this->conn->query($sql);
-        return $stmt->fetchAll();
-
+        $results =  $stmt->fetchAll();
+        $arr = [];
+        foreach ($results as $result){
+            $student = new Student($result['MaSV'],$result['TenSV'],$result['GioiTinh'],$result['NgaySinh'],$result['QueQuan'],$result['Lop'],$result['avatar']);
+            array_push($arr, $student);
+        }
+        return $arr;
     }
-
     // xem cac khoa hoc
     public function viewAllCourse()
     {
         $sql = "SELECT * FROM `Khoahoc`";
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll();
+    }
+
+    // kiem tra khoa hoc da ton tai chua
+    public function checkCourse($maKH){
+        $sql = "SELECT * FROM `Khoahoc` WHERE MaKH  = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1,$maKH);
+        $stmt->execute();
+        $stmt->fetch();
+        return $stmt->rowCount();
     }
 
     // them khoa hoc
@@ -293,7 +333,7 @@ class ProcessDB
         $stmt->execute();
     }
 
-    // Kiem tra password user co trung khong
+    // Kiem tra password co trung khong
     public function checkPass($user)
     {
         $sql = "SELECT `Password` FROM `Users` WHERE UserName = :UserName";
@@ -304,7 +344,7 @@ class ProcessDB
         return $stmt->fetch();
     }
 
-    // Thay doi password user
+    // Thay doi password
     public function changePass($newPass, $user)
     {
         $sql = "UPDATE `Users` SET `Password` = :Password WHERE UserName = :UserName";
@@ -313,6 +353,25 @@ class ProcessDB
             'Password' => $newPass,
             'UserName' => $user
         ));
+    }
+
+    // check hoc luc
+    public function checkDiem($maSV){
+        $sql = "SELECT * FROM `Diem` WHERE MaSV = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1,$maSV);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    // kiem tra user truoc khi tao
+    public function checkUser($user){
+        $sql = "SELECT * FROM `Users` WHERE UserName = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1,$user);
+        $stmt->execute();
+        $stmt->fetch();
+        return $stmt->rowCount();
     }
 
     // Tao user moi
@@ -324,4 +383,25 @@ class ProcessDB
         $stmt->bindParam(2, $user->password);
         $stmt->execute();
     }
+
+    // lay thong tin user
+    public function getUser($userName){
+        $sql = "SELECT * FROM `Users` WHERE `UserName` = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, $userName);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    // them cau hoi
+    public function createHelp($user){
+        $sql = "INSERT INTO `Question`(`Id`, `UserName`, `Phone`, `Question`) VALUES (?,?,?,?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1,$user->id);
+        $stmt->bindParam(2,$user->user);
+        $stmt->bindParam(3,$user->phone);
+        $stmt->bindParam(4,$user->question);
+        $stmt->execute();
+    }
+
 }

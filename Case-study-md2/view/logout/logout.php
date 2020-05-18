@@ -1,3 +1,7 @@
 <?php
 session_start();
-unset($_SESSION['user']);
+if (isset($_SESSION['user'])){
+    unset($_SESSION['user']);
+    header('location: index.php?page=login');
+    exit();
+}

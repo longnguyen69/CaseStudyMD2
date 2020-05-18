@@ -1,14 +1,16 @@
 <?php
-
 namespace control;
 
 use dbStudent\ConnectDB;
-use model\Course;
-use model\Room;
-use model\Score;
-use model\Student;
-use model\Admin;
+use connected\Course;
+use connected\Help;
+use connected\Room;
+use connected\Score;
+use connected\Admin;
+use connected\Student;
 use wordDB\ProcessDB;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class ControllerData
 {
@@ -28,7 +30,11 @@ class ControllerData
             $password = $_REQUEST['password'];
             if ($this->process->login($user, $password) > 0) {
                 $_SESSION['user'] = $user;
-                header('location: index.php');
+                header('location: ./index.php');
+                exit();
+            } else {
+                $error = "Wrong username or password";
+                include 'view/login/login.php';
             }
         }
     }
@@ -38,6 +44,7 @@ class ControllerData
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             unset($_SESSION['user']);
             header('location: ./index.php?page=login');
+            exit();
         }
     }
 
@@ -56,23 +63,29 @@ class ControllerData
             $heDaoTao = $this->process->getHeDT();
             include "view/class/addClass.php";
         } else {
-            $maLop = $_REQUEST['maLop'];
-            $tenLop = $_REQUEST['tenLop'];
-            $khoaHoc = $_REQUEST['khoaHoc'];
-            $heDT = $_REQUEST['heDT'];
 
-            if (!$this->validateStudentID($maLop)) {
-                $msgID = "Mã phải viết hoa, không chứa ký tự đặc biệt và không dài quá 6";
-                include "view/class/addClass.php";
-            } elseif (!$this->validateStudentName($tenLop)) {
-                $msgName = "Tên không được có số và ký tự đặc biệt";
-                include "view/class/addClass.php";
+            if ($this->process->checkClass($_REQUEST['maLop']) > 0){
+                $error = 'Lớp đã tồn tại, Mời bạn tạo lại';
             } else {
-                $room = new Room($maLop, $tenLop, $khoaHoc, $heDT);
-                $this->process->addClass($room);
-                $message = "Add Completed";
-                include 'view/class/addClass.php';
+                $maLop = $_REQUEST['maLop'];
+                $tenLop = $_REQUEST['tenLop'];
+                $khoaHoc = $_REQUEST['khoaHoc'];
+                $heDT = $_REQUEST['heDT'];
+
+                if (!$this->validateStudentID($maLop)) {
+                    $msgID = "Mã phải viết hoa, không chứa ký tự đặc biệt và không dài quá 6";
+//                    include "view/class/addClass.php";
+                } elseif (!$this->validateStudentName($tenLop)) {
+                    $msgName = "Tên không được có số và ký tự đặc biệt";
+//                    include "view/class/addClass.php";
+                } else {
+                    $room = new Room($maLop, $tenLop, $khoaHoc, $heDT);
+                    $this->process->addClass($room);
+                    $message = "Thêm thành công";
+//                    include 'view/class/addClass.php';
+                }
             }
+            include 'view/class/addClass.php';
         }
     }
 
@@ -114,6 +127,7 @@ class ControllerData
             $maLop1 = $_POST['maLop'];
             $this->process->deleteClass($maLop1);
             header('location: index.php');
+            exit();
         }
     }
 
@@ -139,31 +153,42 @@ class ControllerData
             $room = $this->process->getClass();
             include "view/student/addStudent.php";
         } else {
-            $maSV = $_POST['maSV'];
-            $tenSV = $_POST['tenSV'];
-            $gioiTinh = $_POST['gioiTinh'];
-            $ngaySinh = $_POST['ngaySinh'];
-            $queQuan = $_POST['queQuan'];
-            $maLop = $_POST['lop'];
-            if (!$this->validateStudentID($maSV)) {
-                $msgID = "Mã phải viết hoa, không chứa ký tự đặc biệt và không dài quá 6";
-                include "view/student/addStudent.php";
-            } elseif (!$this->validateStudentName($tenSV)) {
-                $msgName = "Tên không được có số và ký tự đặc biệt";
-                include "view/student/addStudent.php";
-            } elseif (empty($ngaySinh)) {
-                $msgBirth = "Ngày sinh không được để trống";
-                include "view/student/addStudent.php";
-            } elseif (!$this->validateStudentName($queQuan)) {
-                $msgCountry = "Quê quán/Địa chỉ không được có số và ký tự đặc biệt";
-                include "view/student/addStudent.php";
+            if ($this->process->checkStudent($_POST['maSV']) > 0){
+                $error = 'Đã tồn tại sinh viên này, mời bạn thêm lại';
             } else {
-                $student = new Student($maSV, $tenSV, $gioiTinh, $ngaySinh, $queQuan, $maLop);
-                $this->process->addStudent($student);
-                $this->process->addScoreStudent($student->maSV);
-                $message = 'Add Complete';
+                $maSV = $_POST['maSV'];
+                $tenSV = $_POST['tenSV'];
+                $gioiTinh = $_POST['gioiTinh'];
+                $ngaySinh = $_POST['ngaySinh'];
+                $queQuan = $_POST['queQuan'];
+                $maLop = $_POST['lop'];
+                $image = $_FILES['image'];
+                $nameFile = $image['name'];
+
+
+                if (!$this->validateStudentID($maSV)) {
+                    $msgID = "Mã phải viết hoa, không chứa ký tự đặc biệt và không dài quá 6";
+//                    include "view/student/addStudent.php";
+                } elseif (!$this->validateStudentName($tenSV)) {
+                    $msgName = "Tên không được có số và ký tự đặc biệt";
+//                    include "view/student/addStudent.php";
+                } elseif (empty($ngaySinh)) {
+                    $msgBirth = "Ngày sinh không được để trống";
+//                    include "view/student/addStudent.php";
+                } elseif (!$this->validateStudentName($queQuan)) {
+                    $msgCountry = "Quê quán/Địa chỉ không được có số và ký tự đặc biệt";
+//                    include "view/student/addStudent.php";
+                } else {
+                    $student = new Student($maSV, $tenSV, $gioiTinh, $ngaySinh, $queQuan, $maLop, $nameFile);
+                    $this->process->addStudent($student);
+                    $this->process->addScoreStudent($student->maSV);
+                    move_uploaded_file($image['tmp_name'], 'uploads/' . $nameFile);
+                    $message = 'Thêm thành công';
+//                    include "view/student/addStudent.php";
+                }
                 include "view/student/addStudent.php";
             }
+
 
         }
     }
@@ -174,6 +199,8 @@ class ControllerData
             $maSV = $_GET['MaSV'];
             $_SESSION['maSV'] = $maSV;
             $students = $this->process->getIDStudent($maSV);
+            $_SESSION['avatar'] = $students['avatar'];
+
             $room = $this->process->getIdLop($students['Lop']);
             $class = $this->process->getClass();
             include 'view/student/editStudent.php';
@@ -185,9 +212,18 @@ class ControllerData
             $queQuan = $_POST['queQuan'];
             $lop = $_POST['lop'];
 
-            $student = new Student($maSV, $tenSV, $gioiTinh, $ngaySinh, $queQuan, $lop);
+            if ($_FILES['image']['name'] == "") {
+                $image = $_SESSION['avatar'];
+                $student = new Student($maSV, $tenSV, $gioiTinh, $ngaySinh, $queQuan, $lop, $image);
+            } else {
+                $image = $_FILES['image'];
+                $nameFile = $image['name'];
+                move_uploaded_file($image['tmp_name'], 'uploads/' . $nameFile);
+                $student = new Student($maSV, $tenSV, $gioiTinh, $ngaySinh, $queQuan, $lop, $nameFile);
+            }
+
             $this->process->updateStudent($student);
-            $messageSt = "Update Complete";
+            $messageSt = "Cập nhật thành công";
             include "view/student/editStudent.php";
         }
     }
@@ -199,6 +235,7 @@ class ControllerData
             $this->process->deleteScore($maSV);
             $this->process->deleteStudent($maSV);
             header('location: index.php?page=Student');
+            exit();
         }
     }
 
@@ -208,6 +245,7 @@ class ControllerData
             $maSV = $_GET['MaSV'];
             $this->process->deleteStudent($maSV);
             header('location: index.php?page=studentClass&MaLop');
+            exit();
         }
     }
 
@@ -216,6 +254,21 @@ class ControllerData
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $maSV = $_REQUEST['MaSV'];
             $arr = $this->process->informationStudent($maSV);
+            $check = $this->process->checkDiem($maSV);
+//            var_dump($check);
+//            die();
+            if ($check['Module1'] == null || $check['Module2'] == null || $check['Module3'] == null) {
+                $error = 'Bạn chưa học xong khóa học!';
+            } else {
+                $medium = ($check['Module1'] + $check['Module2'] + $check['Module3']) / 3;
+                if ($medium < 5){
+                    $message = 'Trung Bình';
+                } elseif ($medium <7) {
+                    $message = 'Khá';
+                } else {
+                    $message = 'Giỏi';
+                }
+            }
             include "view/student/viewStudent.php";
         }
     }
@@ -247,6 +300,7 @@ class ControllerData
             } else {
                 $module3 = $_REQUEST['module3'];
             }
+
             if (!$this->validateScore($module1) && $module1 > 10) {
                 $msgScore1 = "Điểm chỉ có thẻ là số và không lớn quá 10";
                 include "view/student/score.php";
@@ -260,10 +314,11 @@ class ControllerData
                 $score = new Score($maSV, $module1, $module2, $module3);
                 $this->process->addScore($score);
                 header('location: index.php?page=Student');
-
-                include "view/student/score.php";
+                exit();
+//                include "view/student/score.php";
             }
 
+            include "view/student/score.php";
         }
     }
 
@@ -272,10 +327,10 @@ class ControllerData
         if (isset($_REQUEST['keyword'])) {
             $keyword = $_REQUEST['keyword'];
             $students = $this->process->findStudent($keyword);
-            include "view/student/viewStudent.php";
+            include "view/student/viewListStudent.php";
         } else {
             $students = $this->process->getStudent();
-            include "view/student/viewStudent.php";
+            include "view/student/viewListStudent.php";
 
         }
     }
@@ -293,21 +348,18 @@ class ControllerData
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             include "view/course/addCourse.php";
         } else {
-            $maKH = $_REQUEST['maKH'];
-            $tenKH = $_REQUEST['tenKH'];
-            $description = $_REQUEST['text'];
-            if (!$this->validateStudentID($maKH)) {
-                $msgID = "Mã phải viết hoa, không chứa ký tự đặc biệt và không dài quá 6";
-                include "view/course/addCourse.php";
-            } elseif (empty($tenKH)) {
-                $msgName = "Tên không được để trống";
-                include "view/course/addCourse.php";
+            if ($this->process->checkCourse($_REQUEST['maKH'])>0){
+                $error = "Khóa học này đã tồn tại, mời bạn tạo lại";
             } else {
+                $maKH = $_REQUEST['maKH'];
+                $tenKH = $_REQUEST['tenKH'];
+                $description = $_REQUEST['text'];
+
                 $course = new Course($maKH, $tenKH, $description);
                 $this->process->addCourseDB($course);
                 $result = 'Add Completed';
-                include "view/course/addCourse.php";
             }
+            include "view/course/addCourse.php";
         }
     }
 
@@ -326,8 +378,9 @@ class ControllerData
             $course = new Course($maKH, $tenKH, $description);
             $this->process->editCourse($course);
             header('location: ./index.php?page=course');
-            include "view/course/editCourse.php";
+            exit();
         }
+        include "view/course/editCourse.php";
     }
 
     public function viewDetailCourse()
@@ -345,6 +398,7 @@ class ControllerData
             $maKH = $_GET['MaKH'];
             $this->process->deleteCourse($maKH);
             header('location: index.php?page=course');
+            exit();
         }
     }
 
@@ -377,9 +431,13 @@ class ControllerData
             $username = $_REQUEST['username'];
             $password = $_REQUEST['password'];
 
-            $user = new Admin($username, $password);
-            $this->process->createUser($user);
-            $message = 'Tạo Thành Công';
+            if ($this->process->checkUser($username) > 0){
+                $errorCreateUser = "Tài khoản đã tồn tại, mời bạn tạo lại!";
+            } else {
+                $user = new Admin($username, $password);
+                $this->process->createUser($user);
+                $message = 'Tạo Thành Công';
+            }
             include "view/admin/addUser.php";
         }
     }
@@ -410,6 +468,51 @@ class ControllerData
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function helpAdmin(){
+        if ($_SERVER['REQUEST_METHOD'] == "GET"){
+            include "view/help/help.php";
+        } else {
+
+            include "PHPMailer-master/src/PHPMailer.php";
+            include "PHPMailer-master/src/Exception.php";
+            include "PHPMailer-master/src/OAuth.php";
+            include "PHPMailer-master/src/POP3.php";
+            include "PHPMailer-master/src/SMTP.php";
+            $obj = $this->process->getUser($_SESSION['user']);
+            $ids = $obj['id'];
+            $idUser = $_SESSION['user'];
+            $phone = $_REQUEST['phone'];
+            $question = $_REQUEST['question'];
+
+            $mail = new PHPMailer(true);
+            try {
+                $mail->SMTPDebug = 0;
+                $mail->isSMTP();
+                $mail->Host       = 'smtp.gmail.com';
+                $mail->SMTPAuth   = true;
+                $mail->Username   = 'mailtestprotocol@gmail.com';
+                $mail->Password   = 'qgwjlazwreuahyma'; //mat khau xac minh hai buoc cua google
+                $mail->SMTPSecure = 'tls';
+                $mail->Port = 587;
+
+                $mail->setFrom('mailtestprotocol@gmail.com', 'Guest');
+                $mail->addAddress('nguyenthanhlongtlck@gmail.com', 'Guest');
+
+                $mail->Subject = $phone;
+                $mail->Body    = $question;
+                $mail->send();
+                echo 'Message has been sent';
+            } catch (Exception $e) {
+                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
+
+            $objHelp = new Help($ids,$idUser,$phone,$question);
+            $this->process->createHelp($objHelp);
+            $message = 'Gửi thành công, Cảm ơn bạn chúng tôi sẽ phản hồi bạn sớm nhất có th!ể';
+            include "view/help/help.php";
         }
     }
 }

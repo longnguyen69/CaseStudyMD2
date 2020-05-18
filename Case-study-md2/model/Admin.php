@@ -1,6 +1,6 @@
 <?php
+namespace connected;
 
-namespace model;
 
 class Admin
 {
